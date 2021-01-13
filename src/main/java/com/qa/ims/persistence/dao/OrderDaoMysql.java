@@ -1,5 +1,11 @@
 package com.qa.ims.persistence.dao;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -27,45 +33,107 @@ public class OrderDaoMysql implements Dao<Order> {
 		this.password = password;
 	}
 
-	public OrderDaoMysql() {
-		super();
+	Order orderFromResultSet(ResultSet resultSet) throws SQLException {
+		Long orderID = resultSet.getLong("orderID");
+		Long customerID = resultSet.getLong("customerID");
+		String orderDate = resultSet.getString("orderDate");
+		// Long orderlineID = resultSet.getLong("orderlineID");
+		List<Long> orderItems = (List<Long>) resultSet.getArray("orderItems"); // unchecked casting warning ??
+		List<Integer> quantity = (List<Integer>) resultSet.getArray("quantity");
+		return new Order(orderID, customerID, orderDate, orderItems, quantity);
 	}
-
-//	public Long getcustomerID(String fname, String sname) {
-//		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-//				Statement statement = connection.createStatement();
-//				ResultSet resultSet = statement.executeQuery("SELECT id FROM customers WHERE first_name = '" + fname
-//						+ "' and surname = '" + sname + "';");) {
-//			Long customerID = resultSet.getLong("id");
-//			return customerID;
-//		} catch (Exception e) {
-//			LOGGER.debug(e.getStackTrace());
-//			LOGGER.error(e.getStackTrace());
-//		}
-//		return getcustomerID(fname, sname);
-//	}
 
 	@Override
 	public List<Order> readAll() {
-		// TODO Auto-generated method stub
+		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement
+						.executeQuery("SELECT * FROM orderline ol JOIN orders o ON ol.orderID=o.orderID");) {
+			// used the join method here to combine data from orders table with data from
+			// orderline table
+			ArrayList<Order> orders = new ArrayList<>();
+			while (resultSet.next()) {
+				orders.add(orderFromResultSet(resultSet));
+			}
+			return orders;
+		} catch (SQLException e) {
+			LOGGER.debug(e.getStackTrace());
+			LOGGER.error(e.getStackTrace());
+		}
+		return new ArrayList<>();
+	}
+
+	public Order readLatest() {
+		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement
+						.executeQuery("SELECT * FROM orderline ol JOIN orders o ON ol.orderID=o.orderID"
+								+ " ORDER BY o.orderID DESC LIMIT 1;");) {
+			resultSet.next();
+			return orderFromResultSet(resultSet);
+		} catch (Exception e) {
+			LOGGER.debug(e.getStackTrace());
+			LOGGER.error(e.getStackTrace());
+		}
 		return null;
 	}
 
 	@Override
-	public Order create(Order t) {
-		// TODO Auto-generated method stub
+	public Order create(Order order) {
+		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+				Statement statement1 = connection.createStatement();
+				Statement statement2 = connection.createStatement();) {
+			statement1.executeUpdate("INSERT INTO orders(customerID,orderDate) VALUES('" + order.getCustomerID()
+					+ "', '" + order.getOrderDate() + "';");
+			List<Long> itemIDs = order.getOrderitems();
+			List<Integer> quantity = order.getQuantity();
+			statement2.executeUpdate("INSERT INTO orderline(itemID,orderID,quantity) VALUES('" + order.getOrderID() + "', '"
+					+ order.getQuantity() + "';");
+			return readLatest();
+		} catch (Exception e) {
+			LOGGER.debug(e.getStackTrace());
+			LOGGER.error(e.getStackTrace());
+		}
+		retur null;
+	}
+	// need to find a way to get itemID for statement2
+
+	public Order readOrder(Long orderID) {
+		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+				Statement statement = connection.createStatement();) {
+			ResultSet resultSet = statement.executeQuery("SELECT FROM orders WHERE orderID='" + orderID + "';");
+			return orderFromResultSet(resultSet);
+
+		} catch (Exception e) {
+			LOGGER.debug(e.getStackTrace());
+			LOGGER.error(e.getStackTrace());
+		}
 		return null;
+
 	}
 
 	@Override
-	public Order update(Order t) {
-		// TODO Auto-generated method stub
-		return null;
+	public Order update(Order order) {
+		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+				Statement statement1 = connection.createStatement();
+				Statement statement2 = connection.createStatement();){
+			statement1.executeUpdate("UPDATE orders SET customerID = '" + order.getCustomerID() + ", orderDate = '"
+					+ order.getOrderDate() + "';"); 
+			statement2.executeUpdate("UPDATE orderline SET ")
+			
+		}
+			
 	}
 
 	@Override
 	public void delete(long id) {
-		// TODO Auto-generated method stub
+		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+				Statement statement = connection.createStatement();) {
+			statement.executeUpdate("DELETE FROM orders WHERE orderID = '" + id + "';");
+		} catch (Exception e) {
+			LOGGER.debug(e.getStackTrace());
+			LOGGER.debug(e.getStackTrace());
+		}
 
 	}
 
