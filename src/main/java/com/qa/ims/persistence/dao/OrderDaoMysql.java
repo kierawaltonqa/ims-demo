@@ -37,12 +37,19 @@ public class OrderDaoMysql implements Dao<Order> {
 	Order orderFromResultSet(ResultSet resultSet) throws SQLException {
 		Long orderID = resultSet.getLong("orderID");
 		Long customerID = resultSet.getLong("customerID");
-		String orderDate = resultSet.getString("orderDate");
-		// Long orderlineID = resultSet.getLong("orderlineID");
-		List<Long> orderItems = (List<Long>) resultSet.getArray("orderItems"); // unchecked casting warning ??
-		List<Integer> quantity = (List<Integer>) resultSet.getArray("quantity");
-		return new Order(orderID, customerID, orderDate, orderItems, quantity);
+		double totalPrice = resultSet.getDouble("totalPrice");
+		int quantity = resultSet.getInt("quantity");
+		List<Long> orderItems = (List<Long>) resultSet.getObject("orderItems", List.class);
+		return new Order(orderID, customerID, totalPrice, orderItems, quantity);
 	}
+	// method that calculates total price
+//	public double totalPricecalc(Order order) {
+//		try(Connection connection = DriverManager.getConnection(jdbcConnectionUrl,username,password);
+//				Statement statement = connection.createStatement();
+//				ResultSet resultSet = statement.executeQuery("SELECT itemPrice FROM items WHERE itemID= '"
+//						+ order.getOrderID() + "';"); 
+
+//	}
 
 	@Override
 	public List<Order> readAll() {
@@ -50,8 +57,6 @@ public class OrderDaoMysql implements Dao<Order> {
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement
 						.executeQuery("SELECT * FROM orderline ol JOIN orders o ON ol.orderID=o.orderID");) {
-			// used the join method here to combine data from orders table with data from
-			// orderline table
 			ArrayList<Order> orders = new ArrayList<>();
 			while (resultSet.next()) {
 				orders.add(orderFromResultSet(resultSet));
@@ -87,18 +92,18 @@ public class OrderDaoMysql implements Dao<Order> {
 				Statement statement1 = connection.createStatement();
 				PreparedStatement statement2 = connection.prepareStatement(orderlinequery);
 				PreparedStatement statement3 = connection.prepareStatement(IDquery);) {
-			statement1.executeUpdate("INSERT INTO orders(customerID,orderDate) VALUES('" + order.getCustomerID()
-					+ "', '" + order.getOrderDate() + "';");
+			statement1.executeUpdate("INSERT INTO orders(customerID,totalPrice) VALUES('" + order.getCustomerID()
+					+ "', '" + order.getTotalPrice() + "';");
 
 			try (ResultSet resultset = statement3.executeQuery();) {
 				resultset.next();
 				Long thisorderID = resultset.getLong("orderID");
-				List<Long> itemIDs = order.getOrderitems();
-				List<Integer> quantity = order.getQuantity();
+				double quantity = order.getQuantity();
+				List<Long> itemIDs = order.getOrderItems();
 				for (Long ID : itemIDs) {
 					statement2.setString(1, "" + ID);
 					statement2.setString(2, "" + thisorderID);
-					statement2.setString(3, "" + quantity.get(itemIDs.indexOf(ID)));
+					statement2.setString(3, "" + quantity);
 				}
 				resultset.next();
 				return readLatest();
@@ -141,6 +146,11 @@ public class OrderDaoMysql implements Dao<Order> {
 //		}
 //
 //	}
+	@Override
+	public Order update(Order t) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public void delete(long id) {
@@ -152,12 +162,6 @@ public class OrderDaoMysql implements Dao<Order> {
 			LOGGER.debug(e.getStackTrace());
 		}
 
-	}
-
-	@Override
-	public Order update(Order t) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

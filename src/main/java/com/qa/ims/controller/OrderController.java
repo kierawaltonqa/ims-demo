@@ -18,7 +18,9 @@ public class OrderController implements CrudController<Order> {
 	private CrudServices<Order> orderService;
 
 	// create a generator for orderService
+
 	public OrderController(CrudServices<Order> orderService) {
+		super();
 		this.orderService = orderService;
 	}
 
@@ -29,36 +31,30 @@ public class OrderController implements CrudController<Order> {
 	@Override
 	public List<Order> readAll() {
 		List<Order> orders = orderService.readAll();
+		for (Order order : orders) {
+			LOGGER.info(order.toString());
+		}
 		return orders;
 
 	}
 
 	@Override
 	public Order create() {
+		int quantity = 0;
 		ArrayList<Long> orderItems = new ArrayList<>();
-		ArrayList<Integer> quantity = new ArrayList<>();
 		LOGGER.info("enter the customerID of the order you wish to create");
 		Long customerID = Long.valueOf(getInput());
-		LOGGER.info("enter the date when this order was placed");
-		String orderDate = getInput();
 		LOGGER.info("enter 'yes' to add your first item to this order");
 		while (getInput() == "yes") {
-			LOGGER.info("enter the ID of an item from the item table that you wish to add to your order");
+			LOGGER.info("enter the ID of an item you wish to add to your order");
 			Long itemID = Long.valueOf(getInput());
 			orderItems.add(itemID);
 			LOGGER.info("enter the quantity of this item you wish to add to the order");
-			Integer itemQuant = Integer.parseInt(getInput());
-			quantity.add(itemQuant);
-			LOGGER.info("if you would like to add another item to your order, enter 'yes'");
-			LOGGER.info("if you do not want to add any more items enter 'no'");
+			quantity = Integer.parseInt(getInput());
+			LOGGER.info("enter 'yes' to add another item, enter 'no' to finish order");
 		}
-		if (getInput() == "no") {
-			LOGGER.info("your order is complete");
-		}
-
-		Order order = orderService.create(new Order(customerID, orderDate, orderItems, quantity));
+		Order order = orderService.create(new Order(customerID, orderItems, quantity));
 		return order;
-
 	}
 	/*
 	 * in this update method, you can update the order by referring to the customer
@@ -68,39 +64,23 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public Order update() {
+		int quantity = 0;
 		ArrayList<Long> orderItems = new ArrayList<>();
-		ArrayList<Integer> quantity = new ArrayList<>();
 		LOGGER.info("enter the ID of the order you wish to update");
 		Long orderID = Long.valueOf(getInput());
 		LOGGER.info("enter the ID of the customer corresponding to the order");
 		Long customerID = Long.valueOf(getInput());
-		LOGGER.info("enter the date when this order was placed");
-		String orderDate = getInput();
 		LOGGER.info("enter 'yes' to add your first item to this order");
 		while (getInput() == "yes") {
 			LOGGER.info("enter the ID of an item you wish to add to the order");
 			Long itemID = Long.valueOf(getInput());
 			orderItems.add(itemID);
 			LOGGER.info("enter the quantity of this item you wish to add");
-			Integer itemQuant = Integer.parseInt(getInput());
-			quantity.add(itemQuant);
-			LOGGER.info("enter 'yes' if you wish to add any more items to this order");
-			LOGGER.info("enter 'no' if you do not");
+			quantity = Integer.parseInt(getInput());
+			LOGGER.info("enter 'yes' to add more items, and 'no' to complete order");
 		}
-		if (getInput() == "no") {
-			LOGGER.info("your order is complete");
-		}
-		Order order = orderService.create(new Order(orderID, customerID, orderDate, orderItems, quantity));
+		Order order = orderService.create(new Order(orderID, customerID, orderItems, quantity));
 		return order;
-
-//		LOGGER.info("enter the ID of an item you wish to add to the order");
-//		Long itemID = Long.valueOf(getInput());
-//		orderItems.add(itemID);
-//		LOGGER.info("enter the quantity of this item you wish to add");
-//		Integer itemQuant = Integer.parseInt(getInput());
-//		quantity.add(itemQuant);
-//		Order order = orderService.create(new Order(orderID, customerID, orderItems, quantity));
-//		return order;
 	}
 
 	@Override
