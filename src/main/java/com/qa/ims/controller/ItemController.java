@@ -50,7 +50,7 @@ public class ItemController implements CrudController<Item> {
 		LOGGER.info("Now enter the price of this item");
 		String itemPrice = getInput();
 		Item item = itemService.create(new Item(itemName, itemPrice));
-		LOGGER.info("Item has been created");
+		LOGGER.info("The item has been created");
 		return item;
 	}
 	/*
