@@ -2,6 +2,7 @@ package com.qa.ims.persistence.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -80,25 +81,41 @@ public class OrderDaoMysql implements Dao<Order> {
 
 	@Override
 	public Order create(Order order) {
+		String orderlinequery = "INSERT INTO orderline(itemID,orderID,quantity VALUES(?, ?, ?)";
+		String IDquery = "SELECT orderID FROM orders ORDER BY orderID DESC LIMIT 1";
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement1 = connection.createStatement();
-				Statement statement2 = connection.createStatement();) {
+				PreparedStatement statement2 = connection.prepareStatement(orderlinequery);
+				PreparedStatement statement3 = connection.prepareStatement(IDquery);) {
 			statement1.executeUpdate("INSERT INTO orders(customerID,orderDate) VALUES('" + order.getCustomerID()
 					+ "', '" + order.getOrderDate() + "';");
-			List<Long> itemIDs = order.getOrderitems();
-			List<Integer> quantity = order.getQuantity();
-			statement2.executeUpdate("INSERT INTO orderline(itemID,orderID,quantity) VALUES('" + order.getOrderID() + "', '"
-					+ order.getQuantity() + "';");
-			return readLatest();
+
+			try (ResultSet resultset = statement3.executeQuery();) {
+				resultset.next();
+				Long thisorderID = resultset.getLong("orderID");
+				List<Long> itemIDs = order.getOrderitems();
+				List<Integer> quantity = order.getQuantity();
+				for (Long ID : itemIDs) {
+					statement2.setString(1, "" + ID);
+					statement2.setString(2, "" + thisorderID);
+					statement2.setString(3, "" + quantity.get(itemIDs.indexOf(ID)));
+				}
+				resultset.next();
+				return readLatest();
+			} catch (Exception e) {
+				LOGGER.debug(e.getStackTrace());
+				LOGGER.error(e.getStackTrace());
+			}
+
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getStackTrace());
 		}
-		retur null;
+		return null;
 	}
-	// need to find a way to get itemID for statement2
 
 	public Order readOrder(Long orderID) {
+
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
 			ResultSet resultSet = statement.executeQuery("SELECT FROM orders WHERE orderID='" + orderID + "';");
@@ -112,18 +129,18 @@ public class OrderDaoMysql implements Dao<Order> {
 
 	}
 
-	@Override
-	public Order update(Order order) {
-		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement1 = connection.createStatement();
-				Statement statement2 = connection.createStatement();){
-			statement1.executeUpdate("UPDATE orders SET customerID = '" + order.getCustomerID() + ", orderDate = '"
-					+ order.getOrderDate() + "';"); 
-			statement2.executeUpdate("UPDATE orderline SET ")
-			
-		}
-			
-	}
+//	@Override
+//	public Order update(Order order) {
+//		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+//				Statement statement1 = connection.createStatement();
+//				Statement statement2 = connection.createStatement();) {
+//			statement1.executeUpdate("UPDATE orders SET customerID = '" + order.getCustomerID() + ", orderDate = '"
+//					+ order.getOrderDate() + "';");
+//			statement2.executeUpdate("UPDATE orderline SET ");
+//
+//		}
+//
+//	}
 
 	@Override
 	public void delete(long id) {
@@ -135,6 +152,12 @@ public class OrderDaoMysql implements Dao<Order> {
 			LOGGER.debug(e.getStackTrace());
 		}
 
+	}
+
+	@Override
+	public Order update(Order t) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

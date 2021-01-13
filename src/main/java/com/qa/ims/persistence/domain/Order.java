@@ -8,12 +8,9 @@ public class Order {
 	// would enter
 	// the details contained in both tables when they are creating an order
 
-	// from orders table
 	private Long orderID;
 	private Long customerID;
 	private String orderDate;
-
-	// from orderline
 	private Long orderlineID;
 	private List<Long> orderItems;
 	private List<Integer> quantity;
