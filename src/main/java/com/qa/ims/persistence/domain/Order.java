@@ -15,8 +15,22 @@ public class Order {
 
 	// from orderline
 	private Long orderlineID;
-	private List<Long> orderitems;
+	private List<Long> orderItems;
 	private List<Integer> quantity;
+
+	public Order(List<Long> orderitems) {
+		super();
+		this.orderItems = orderitems;
+	}
+
+	// use this in update method in orderController
+	public Order(Long orderID, Long customerID, List<Long> orderItems, List<Integer> quantity) {
+		super();
+		this.orderID = orderID;
+		this.customerID = customerID;
+		this.orderItems = orderItems;
+		this.quantity = quantity;
+	}
 
 	public Order(Long customerID, String orderDate) {
 		super();
@@ -31,18 +45,19 @@ public class Order {
 		this.orderDate = orderDate;
 	}
 
-	public Order(Long orderID, String orderDate, List<Long> orderitems, List<Integer> quantity) {
+	// use this in create method in orderController
+	public Order(Long customerID, String orderDate, List<Long> orderItems, List<Integer> quantity) {
 		super();
-		this.orderID = orderID;
+		this.customerID = customerID;
 		this.orderDate = orderDate;
-		this.orderitems = orderitems;
+		this.orderItems = orderItems;
 		this.quantity = quantity;
 	}
 
 	public Order(String orderDate, List<Long> orderitems, List<Integer> quantity, Long customerID) {
 		super();
 		this.orderDate = orderDate;
-		this.orderitems = orderitems;
+		this.orderItems = orderitems;
 		this.quantity = quantity;
 		this.customerID = customerID;
 	}
@@ -52,7 +67,7 @@ public class Order {
 		this.orderID = orderID;
 		this.customerID = customerID;
 		this.orderDate = orderDate;
-		this.orderitems = orderitems;
+		this.orderItems = orderitems;
 		this.quantity = quantity;
 	}
 
@@ -89,11 +104,11 @@ public class Order {
 	}
 
 	public List<Long> getOrderitems() {
-		return orderitems;
+		return orderItems;
 	}
 
 	public void setOrderitems(List<Long> orderitems) {
-		this.orderitems = orderitems;
+		this.orderItems = orderitems;
 	}
 
 	public List<Integer> getQuantity() {
@@ -111,7 +126,7 @@ public class Order {
 		result = prime * result + ((customerID == null) ? 0 : customerID.hashCode());
 		result = prime * result + ((orderDate == null) ? 0 : orderDate.hashCode());
 		result = prime * result + ((orderID == null) ? 0 : orderID.hashCode());
-		result = prime * result + ((orderitems == null) ? 0 : orderitems.hashCode());
+		result = prime * result + ((orderItems == null) ? 0 : orderItems.hashCode());
 		result = prime * result + ((orderlineID == null) ? 0 : orderlineID.hashCode());
 		result = prime * result + ((quantity == null) ? 0 : quantity.hashCode());
 		return result;
@@ -141,10 +156,10 @@ public class Order {
 				return false;
 		} else if (!orderID.equals(other.orderID))
 			return false;
-		if (orderitems == null) {
-			if (other.orderitems != null)
+		if (orderItems == null) {
+			if (other.orderItems != null)
 				return false;
-		} else if (!orderitems.equals(other.orderitems))
+		} else if (!orderItems.equals(other.orderItems))
 			return false;
 		if (orderlineID == null) {
 			if (other.orderlineID != null)

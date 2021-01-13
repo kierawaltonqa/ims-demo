@@ -1,9 +1,5 @@
 package com.qa.ims.persistence.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -35,19 +31,19 @@ public class OrderDaoMysql implements Dao<Order> {
 		super();
 	}
 
-	public Long getcustomerID(String fname, String sname) {
-		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT id FROM customers WHERE first_name = '" + fname
-						+ "' and surname = '" + sname + "';");) {
-			Long customerID = resultSet.getLong("id");
-			return customerID;
-		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getStackTrace());
-		}
-		return getcustomerID(fname, sname);
-	}
+//	public Long getcustomerID(String fname, String sname) {
+//		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+//				Statement statement = connection.createStatement();
+//				ResultSet resultSet = statement.executeQuery("SELECT id FROM customers WHERE first_name = '" + fname
+//						+ "' and surname = '" + sname + "';");) {
+//			Long customerID = resultSet.getLong("id");
+//			return customerID;
+//		} catch (Exception e) {
+//			LOGGER.debug(e.getStackTrace());
+//			LOGGER.error(e.getStackTrace());
+//		}
+//		return getcustomerID(fname, sname);
+//	}
 
 	@Override
 	public List<Order> readAll() {

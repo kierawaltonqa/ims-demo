@@ -1,10 +1,10 @@
 package com.qa.ims.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.qa.ims.persistence.dao.OrderDaoMysql;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.services.CrudServices;
 import com.qa.ims.utils.Utils;
@@ -35,12 +35,21 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public Order create() {
+		ArrayList<Long> orderItems = new ArrayList<>();
+		ArrayList<Integer> quantity = new ArrayList<>();
 		LOGGER.info("enter the customerID of the order you wish to create");
 		Long customerID = Long.valueOf(getInput());
 		LOGGER.info("enter the date when this order was placed");
 		String orderDate = getInput();
-		Order order = orderService.create(new Order(customerID, orderDate));
+		LOGGER.info("enter the ID of an item from the item table that you wish to add to your order");
+		Long itemID = Long.valueOf(getInput());
+		orderItems.add(itemID);
+		LOGGER.info("enter the quantity of this item you wish to add to the order");
+		Integer itemQuant = Integer.parseInt(getInput());
+		quantity.add(itemQuant);
+		Order order = orderService.create(new Order(customerID, orderDate, orderItems, quantity));
 		return order;
+
 	}
 	/*
 	 * in this update method, you can update the order by referring to the customer
@@ -50,18 +59,20 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public Order update() {
-		LOGGER.info("enter the first name of the customer whos order you wish to update");
-		String first_name = getInput();
-		LOGGER.info("enter the last name of the customer whos order you wish to create");
-		String surname = getInput();
-		// find the customer ID that corresponds to that first name
-		OrderDaoMysql orderDaoMysql = new OrderDaoMysql();
-		Long customerID = orderDaoMysql.getcustomerID(first_name, surname);
-		LOGGER.info("please enter the date when this order was placed");
-		String orderDate = getInput();
-		Order order = orderService.create(new Order(customerID, orderDate));
+		ArrayList<Long> orderItems = new ArrayList<>();
+		ArrayList<Integer> quantity = new ArrayList<>();
+		LOGGER.info("enter the ID of the order you wish to update");
+		Long orderID = Long.valueOf(getInput());
+		LOGGER.info("enter the ID of the customer corresponding to the order");
+		Long customerID = Long.valueOf(getInput());
+		LOGGER.info("enter the ID of an item you wish to add to the order");
+		Long itemID = Long.valueOf(getInput());
+		orderItems.add(itemID);
+		LOGGER.info("enter the quantity of this item you wish to add");
+		Integer itemQuant = Integer.parseInt(getInput());
+		quantity.add(itemQuant);
+		Order order = orderService.create(new Order(orderID, customerID, orderItems, quantity));
 		return order;
-
 	}
 
 	@Override
