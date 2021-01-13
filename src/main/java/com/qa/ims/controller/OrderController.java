@@ -42,6 +42,11 @@ public class OrderController implements CrudController<Order> {
 		Order order = orderService.create(new Order(customerID, orderDate));
 		return order;
 	}
+	/*
+	 * in this update method, you can update the order by referring to the customer
+	 * first name and surname, then the customerID will be found and the order which
+	 * corresponds to that ID and date will be found
+	 */
 
 	@Override
 	public Order update() {
@@ -50,7 +55,7 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("enter the last name of the customer whos order you wish to create");
 		String surname = getInput();
 		// find the customer ID that corresponds to that first name
-		OrderDaoMysql orderDaoMysql = new OrderDaoMysql("root", "root");
+		OrderDaoMysql orderDaoMysql = new OrderDaoMysql();
 		Long customerID = orderDaoMysql.getcustomerID(first_name, surname);
 		LOGGER.info("please enter the date when this order was placed");
 		String orderDate = getInput();
@@ -61,8 +66,10 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public void delete() {
-		// TODO Auto-generated method stub
-
+		LOGGER.info("please enter the ID of the order you wish to delete");
+		Long orderID = Long.valueOf(getInput());
+		orderService.delete(orderID);
+		LOGGER.info("order deleted");
 	}
 
 }

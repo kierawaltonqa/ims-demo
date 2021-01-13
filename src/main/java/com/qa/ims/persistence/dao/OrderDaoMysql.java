@@ -31,11 +31,15 @@ public class OrderDaoMysql implements Dao<Order> {
 		this.password = password;
 	}
 
+	public OrderDaoMysql() {
+		super();
+	}
+
 	public Long getcustomerID(String fname, String sname) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery(
-						"SELECT id FROM orders WHERE first_name = '" + fname + "' and surname = '" + sname + "';");) {
+				ResultSet resultSet = statement.executeQuery("SELECT id FROM customers WHERE first_name = '" + fname
+						+ "' and surname = '" + sname + "';");) {
 			Long customerID = resultSet.getLong("id");
 			return customerID;
 		} catch (Exception e) {
