@@ -89,15 +89,42 @@ public class ItemDaoMysql implements Dao<Item> {
 		return null;
 	}
 
+	public Item readItem(Long itemID) {
+		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+				Statement statement = connection.createStatement();) {
+			ResultSet resultSet = statement.executeQuery("SELECT FROM items WHERE itemID = '" + itemID + "';");
+			return itemFromResultSet(resultSet);
+		} catch (Exception e) {
+			LOGGER.debug(e.getStackTrace());
+			LOGGER.error(e.getStackTrace());
+		}
+		return null;
+	}
+
 	@Override
-	public Item update(Item t) {
-		// TODO Auto-generated method stub
+	public Item update(Item item) {
+		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+				Statement statement = connection.createStatement();) {
+			statement.executeUpdate("UPDATE items SET itemName = '" + item.getItemName() + "', itemPrice = '"
+					+ item.getItemPrice() + "' WHERE itemID = '" + item.getItemID() + "';");
+			return readItem(item.getItemID());
+		} catch (Exception e) {
+			LOGGER.debug(e.getStackTrace());
+			LOGGER.error(e.getStackTrace());
+		}
 		return null;
 	}
 
 	@Override
 	public void delete(long id) {
-		// TODO Auto-generated method stub
+		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+				Statement statement = connection.createStatement();) {
+			statement.executeUpdate("DELETE FROM items WHERE itemID = '" + id + "';");
+			System.out.println("item deleted");
+		} catch (Exception e) {
+			LOGGER.debug(e.getStackTrace());
+			LOGGER.error(e.getStackTrace());
+		}
 
 	}
 
