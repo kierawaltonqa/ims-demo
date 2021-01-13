@@ -54,14 +54,6 @@ public class Order {
 		this.quantity = quantity;
 	}
 
-	public Order(String orderDate, List<Long> orderitems, List<Integer> quantity, Long customerID) {
-		super();
-		this.orderDate = orderDate;
-		this.orderItems = orderitems;
-		this.quantity = quantity;
-		this.customerID = customerID;
-	}
-
 	public Order(Long orderID, Long customerID, String orderDate, List<Long> orderitems, List<Integer> quantity) {
 		super();
 		this.orderID = orderID;

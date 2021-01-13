@@ -65,14 +65,31 @@ public class OrderController implements CrudController<Order> {
 		Long orderID = Long.valueOf(getInput());
 		LOGGER.info("enter the ID of the customer corresponding to the order");
 		Long customerID = Long.valueOf(getInput());
-		LOGGER.info("enter the ID of an item you wish to add to the order");
-		Long itemID = Long.valueOf(getInput());
-		orderItems.add(itemID);
-		LOGGER.info("enter the quantity of this item you wish to add");
-		Integer itemQuant = Integer.parseInt(getInput());
-		quantity.add(itemQuant);
+		LOGGER.info("enter 'yes' to add your first item to this order");
+		while (getInput() == "yes") {
+			LOGGER.info("enter the ID of an item you wish to add to the order");
+			Long itemID = Long.valueOf(getInput());
+			orderItems.add(itemID);
+			LOGGER.info("enter the quantity of this item you wish to add");
+			Integer itemQuant = Integer.parseInt(getInput());
+			quantity.add(itemQuant);
+			LOGGER.info("enter 'yes' if you wish to add any more items to this order");
+			LOGGER.info("enter 'no' if you do not");
+		}
+		if (getInput() == "no") {
+			LOGGER.info("your order is complete");
+		}
 		Order order = orderService.create(new Order(orderID, customerID, orderItems, quantity));
 		return order;
+
+//		LOGGER.info("enter the ID of an item you wish to add to the order");
+//		Long itemID = Long.valueOf(getInput());
+//		orderItems.add(itemID);
+//		LOGGER.info("enter the quantity of this item you wish to add");
+//		Integer itemQuant = Integer.parseInt(getInput());
+//		quantity.add(itemQuant);
+//		Order order = orderService.create(new Order(orderID, customerID, orderItems, quantity));
+//		return order;
 	}
 
 	@Override
