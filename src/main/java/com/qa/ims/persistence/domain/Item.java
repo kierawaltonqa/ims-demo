@@ -19,6 +19,11 @@ public class Item {
 		this.itemPrice = itemPrice;
 	}
 
+	public Item(Long itemID) {
+		super();
+		this.itemID = itemID;
+	}
+
 	public Long getItemID() {
 		return itemID;
 	}

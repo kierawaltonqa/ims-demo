@@ -10,16 +10,11 @@ import com.qa.ims.utils.Utils;
 
 public class OrderController implements CrudController<Order> {
 
-	// create a logger
 	public static final Logger LOGGER = Logger.getLogger(OrderController.class);
 
-	// create an attribute crudServices<Order>
 	private CrudServices<Order> orderService;
 
-	// create a generator for orderService
-
 	public OrderController(CrudServices<Order> orderService) {
-		super();
 		this.orderService = orderService;
 	}
 
@@ -45,7 +40,9 @@ public class OrderController implements CrudController<Order> {
 		Long itemID = Long.valueOf(getInput());
 		LOGGER.info("enter the quantity of this item you would like to add");
 		int quantity = Integer.parseInt(getInput());
-		Order order = orderService.create(new Order(customerID, itemID, quantity));
+		LOGGER.info("enter the total price of this order");
+		String totalPrice = getInput();
+		Order order = orderService.create(new Order(customerID, totalPrice, itemID, quantity));
 		return order;
 	}
 
@@ -59,7 +56,12 @@ public class OrderController implements CrudController<Order> {
 		Long itemID = Long.valueOf(getInput());
 		LOGGER.info("enter the quantity of this item you wish to add");
 		int quantity = Integer.parseInt(getInput());
-		Order order = orderService.create(new Order(orderID, customerID, itemID, quantity));
+		LOGGER.info("enter the total price of this order");
+		String totalPrice = getInput();
+//		Item item = Item(itemID);
+//		String price = item.getItemPrice();
+
+		Order order = orderService.create(new Order(orderID, customerID, totalPrice, itemID, quantity));
 		return order;
 
 	}

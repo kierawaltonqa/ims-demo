@@ -1,7 +1,5 @@
 package com.qa.ims.persistence.domain;
 
-import java.math.BigDecimal;
-
 public class Order {
 	// This class will contain attributes from both the orders and orderline table
 	// they are in two distinct tables to handle many-many relations, but the user
@@ -10,32 +8,23 @@ public class Order {
 
 	private Long orderID;
 	private Long customerID;
-	private BigDecimal totalPrice;
+	private String totalPrice;
 	private Long itemID;
 	private int quantity;
 
-	@Override
-	public String toString() {
-		return "orderID: " + orderID + ", customerID: " + customerID + ", totalPrice: " + totalPrice + " orderItems: "
-				+ itemID + ", quantity: " + quantity;
-	}
-
 	public Order(Long itemID) {
-		super();
 		this.itemID = itemID;
 	}
 
 	// use this in update method in orderController
 	public Order(Long orderID, Long customerID, Long itemID, int quantity) {
-		super();
 		this.orderID = orderID;
 		this.customerID = customerID;
 		this.itemID = itemID;
 		this.quantity = quantity;
 	}
 
-	public Order(Long orderID, Long customerID, BigDecimal totalPrice, Long itemID, int quantity) {
-		super();
+	public Order(Long orderID, Long customerID, String totalPrice, Long itemID, int quantity) {
 		this.orderID = orderID;
 		this.customerID = customerID;
 		this.totalPrice = totalPrice;
@@ -44,10 +33,22 @@ public class Order {
 	}
 
 	public Order(Long customerID, Long itemID, int quantity) {
-		super();
 		this.customerID = customerID;
 		this.itemID = itemID;
 		this.quantity = quantity;
+	}
+
+	public Order(Long customerID, String totalPrice, Long itemID, int quantity) {
+		this.customerID = customerID;
+		this.totalPrice = totalPrice;
+		this.itemID = itemID;
+		this.quantity = quantity;
+	}
+
+	@Override
+	public String toString() {
+		return "orderID: " + orderID + ", customerID: " + customerID + ", totalPrice: " + totalPrice + ", itemID: "
+				+ itemID + ", quantity: " + quantity;
 	}
 
 	public Long getOrderID() {
@@ -66,11 +67,11 @@ public class Order {
 		this.customerID = customerID;
 	}
 
-	public BigDecimal getTotalPrice() {
+	public String getTotalPrice() {
 		return totalPrice;
 	}
 
-	public void setTotalPrice(BigDecimal totalPrice) {
+	public void setTotalPrice(String totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 
