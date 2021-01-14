@@ -1,6 +1,5 @@
 package com.qa.ims.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -38,50 +37,31 @@ public class OrderController implements CrudController<Order> {
 
 	}
 
-//this create method fails when it hits the while loop at line 48 - sort this tomorrow!!
 	@Override
 	public Order create() {
-		int quantity = 0;
-		ArrayList<Long> orderItems = new ArrayList<>();
 		LOGGER.info("enter the customerID of the order you wish to create");
 		Long customerID = Long.valueOf(getInput());
-		LOGGER.info("enter 'yes' to add your first item to this order");
-		while (getInput() == "yes") {
-			LOGGER.info("enter the ID of an item you wish to add to your order");
-			Long itemID = Long.valueOf(getInput());
-			orderItems.add(itemID);
-			LOGGER.info("enter the quantity of this item you wish to add to the order");
-			quantity = Integer.parseInt(getInput());
-			LOGGER.info("enter 'yes' to add another item, enter 'no' to finish order");
-		}
-		Order order = orderService.create(new Order(customerID, orderItems, quantity));
+		LOGGER.info("enter the the ID of an item you wish to add to this order");
+		Long itemID = Long.valueOf(getInput());
+		LOGGER.info("enter the quantity of this item you would like to add");
+		int quantity = Integer.parseInt(getInput());
+		Order order = orderService.create(new Order(customerID, itemID, quantity));
 		return order;
 	}
-	/*
-	 * in this update method, you can update the order by referring to the customer
-	 * first name and surname, then the customerID will be found and the order which
-	 * corresponds to that ID and date will be found
-	 */
 
 	@Override
 	public Order update() {
-		int quantity = 0;
-		ArrayList<Long> orderItems = new ArrayList<>();
 		LOGGER.info("enter the ID of the order you wish to update");
 		Long orderID = Long.valueOf(getInput());
-		LOGGER.info("enter the ID of the customer corresponding to the order");
+		LOGGER.info("enter the ID of the customer corresponding to this order");
 		Long customerID = Long.valueOf(getInput());
-		LOGGER.info("enter 'yes' to add your first item to this order");
-		while (getInput() == "yes") {
-			LOGGER.info("enter the ID of an item you wish to add to the order");
-			Long itemID = Long.valueOf(getInput());
-			orderItems.add(itemID);
-			LOGGER.info("enter the quantity of this item you wish to add");
-			quantity = Integer.parseInt(getInput());
-			LOGGER.info("enter 'yes' to add more items, and 'no' to complete order");
-		}
-		Order order = orderService.create(new Order(orderID, customerID, orderItems, quantity));
+		LOGGER.info("enter the ID of an item you wish to add to the order");
+		Long itemID = Long.valueOf(getInput());
+		LOGGER.info("enter the quantity of this item you wish to add");
+		int quantity = Integer.parseInt(getInput());
+		Order order = orderService.create(new Order(orderID, customerID, itemID, quantity));
 		return order;
+
 	}
 
 	@Override

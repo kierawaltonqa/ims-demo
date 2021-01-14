@@ -1,6 +1,6 @@
 package com.qa.ims.persistence.domain;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 public class Order {
 	// This class will contain attributes from both the orders and orderline table
@@ -10,43 +10,43 @@ public class Order {
 
 	private Long orderID;
 	private Long customerID;
-	private double totalPrice;
-	private List<Long> orderItems;
+	private BigDecimal totalPrice;
+	private Long itemID;
 	private int quantity;
 
 	@Override
 	public String toString() {
-		return "orderID: " + orderID + ", customerID: " + customerID + ", orderItems: " + orderItems + ", quantity: "
-				+ quantity;
+		return "orderID: " + orderID + ", customerID: " + customerID + ", totalPrice: " + totalPrice + " orderItems: "
+				+ itemID + ", quantity: " + quantity;
 	}
 
-	public Order(List<Long> orderitems) {
+	public Order(Long itemID) {
 		super();
-		this.orderItems = orderitems;
+		this.itemID = itemID;
 	}
 
 	// use this in update method in orderController
-	public Order(Long orderID, Long customerID, List<Long> orderItems, int quantity) {
+	public Order(Long orderID, Long customerID, Long itemID, int quantity) {
 		super();
 		this.orderID = orderID;
 		this.customerID = customerID;
-		this.orderItems = orderItems;
+		this.itemID = itemID;
 		this.quantity = quantity;
 	}
 
-	public Order(Long orderID, Long customerID, double totalPrice, List<Long> orderItems, int quantity) {
+	public Order(Long orderID, Long customerID, BigDecimal totalPrice, Long itemID, int quantity) {
 		super();
 		this.orderID = orderID;
 		this.customerID = customerID;
 		this.totalPrice = totalPrice;
-		this.orderItems = orderItems;
+		this.itemID = itemID;
 		this.quantity = quantity;
 	}
 
-	public Order(Long customerID, List<Long> orderItems, int quantity) {
+	public Order(Long customerID, Long itemID, int quantity) {
 		super();
 		this.customerID = customerID;
-		this.orderItems = orderItems;
+		this.itemID = itemID;
 		this.quantity = quantity;
 	}
 
@@ -66,20 +66,20 @@ public class Order {
 		this.customerID = customerID;
 	}
 
-	public double getTotalPrice() {
+	public BigDecimal getTotalPrice() {
 		return totalPrice;
 	}
 
-	public void setTotalPrice(double totalPrice) {
+	public void setTotalPrice(BigDecimal totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 
-	public List<Long> getOrderItems() {
-		return orderItems;
+	public Long getItemID() {
+		return itemID;
 	}
 
-	public void setOrderItems(List<Long> orderItems) {
-		this.orderItems = orderItems;
+	public void setItemID(Long itemID) {
+		this.itemID = itemID;
 	}
 
 	public int getQuantity() {
@@ -95,12 +95,10 @@ public class Order {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((customerID == null) ? 0 : customerID.hashCode());
+		result = prime * result + ((itemID == null) ? 0 : itemID.hashCode());
 		result = prime * result + ((orderID == null) ? 0 : orderID.hashCode());
-		result = prime * result + ((orderItems == null) ? 0 : orderItems.hashCode());
 		result = prime * result + quantity;
-		long temp;
-		temp = Double.doubleToLongBits(totalPrice);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((totalPrice == null) ? 0 : totalPrice.hashCode());
 		return result;
 	}
 
@@ -118,19 +116,22 @@ public class Order {
 				return false;
 		} else if (!customerID.equals(other.customerID))
 			return false;
+		if (itemID == null) {
+			if (other.itemID != null)
+				return false;
+		} else if (!itemID.equals(other.itemID))
+			return false;
 		if (orderID == null) {
 			if (other.orderID != null)
 				return false;
 		} else if (!orderID.equals(other.orderID))
 			return false;
-		if (orderItems == null) {
-			if (other.orderItems != null)
-				return false;
-		} else if (!orderItems.equals(other.orderItems))
-			return false;
 		if (quantity != other.quantity)
 			return false;
-		if (Double.doubleToLongBits(totalPrice) != Double.doubleToLongBits(other.totalPrice))
+		if (totalPrice == null) {
+			if (other.totalPrice != null)
+				return false;
+		} else if (!totalPrice.equals(other.totalPrice))
 			return false;
 		return true;
 	}

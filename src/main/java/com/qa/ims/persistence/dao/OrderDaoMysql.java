@@ -1,8 +1,8 @@
 package com.qa.ims.persistence.dao;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -34,22 +34,33 @@ public class OrderDaoMysql implements Dao<Order> {
 		this.password = password;
 	}
 
+	public OrderDaoMysql() {
+		super();
+	}
+
 	Order orderFromResultSet(ResultSet resultSet) throws SQLException {
 		Long orderID = resultSet.getLong("orderID");
 		Long customerID = resultSet.getLong("customerID");
-		double totalPrice = resultSet.getDouble("totalPrice");
+		BigDecimal totalPrice = resultSet.getBigDecimal("totalPrice");
 		int quantity = resultSet.getInt("quantity");
-		List<Long> orderItems = (List<Long>) resultSet.getObject("orderItems", List.class);
-		return new Order(orderID, customerID, totalPrice, orderItems, quantity);
+		Long itemID = resultSet.getLong("itemID");
+		return new Order(orderID, customerID, totalPrice, itemID, quantity);
 	}
-	// method that calculates total price
-//	public double totalPricecalc(Order order) {
-//		try(Connection connection = DriverManager.getConnection(jdbcConnectionUrl,username,password);
-//				Statement statement = connection.createStatement();
-//				ResultSet resultSet = statement.executeQuery("SELECT itemPrice FROM items WHERE itemID= '"
-//						+ order.getOrderID() + "';"); 
 
-//	}
+// method that finds the price of an order from its orderID 
+	public Order itemPriceCalc(Order order) {
+		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement
+						.executeQuery("SELECT itemPrice FROM items WHERE itemID= '" + order.getOrderID() + "';");) {
+			resultSet.next();
+			return orderFromResultSet(resultSet);
+		} catch (Exception e) {
+			LOGGER.debug(e.getStackTrace());
+			LOGGER.error(e.getStackTrace());
+		}
+		return null;
+	}
 
 	@Override
 	public List<Order> readAll() {
@@ -86,32 +97,14 @@ public class OrderDaoMysql implements Dao<Order> {
 
 	@Override
 	public Order create(Order order) {
-		String orderlinequery = "INSERT INTO orderline(itemID,orderID,quantity VALUES(?, ?, ?)";
-		String IDquery = "SELECT orderID FROM orders ORDER BY orderID DESC LIMIT 1";
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement1 = connection.createStatement();
-				PreparedStatement statement2 = connection.prepareStatement(orderlinequery);
-				PreparedStatement statement3 = connection.prepareStatement(IDquery);) {
+				Statement statement2 = connection.createStatement();) {
 			statement1.executeUpdate("INSERT INTO orders(customerID,totalPrice) VALUES('" + order.getCustomerID()
 					+ "', '" + order.getTotalPrice() + "';");
-
-			try (ResultSet resultset = statement3.executeQuery();) {
-				resultset.next();
-				Long thisorderID = resultset.getLong("orderID");
-				double quantity = order.getQuantity();
-				List<Long> itemIDs = order.getOrderItems();
-				for (Long ID : itemIDs) {
-					statement2.setString(1, "" + ID);
-					statement2.setString(2, "" + thisorderID);
-					statement2.setString(3, "" + quantity);
-				}
-				resultset.next();
-				return readLatest();
-			} catch (Exception e) {
-				LOGGER.debug(e.getStackTrace());
-				LOGGER.error(e.getStackTrace());
-			}
-
+			statement2.executeUpdate("INSERT INTO orderline(itemID,orderID,quantity) VALUES('" + order.getItemID()
+					+ "','" + order.getOrderID() + "','" + order.getQuantity() + ",;");
+			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getStackTrace());
@@ -134,21 +127,20 @@ public class OrderDaoMysql implements Dao<Order> {
 
 	}
 
-//	@Override
-//	public Order update(Order order) {
-//		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-//				Statement statement1 = connection.createStatement();
-//				Statement statement2 = connection.createStatement();) {
-//			statement1.executeUpdate("UPDATE orders SET customerID = '" + order.getCustomerID() + ", orderDate = '"
-//					+ order.getOrderDate() + "';");
-//			statement2.executeUpdate("UPDATE orderline SET ");
-//
-//		}
-//
-//	}
 	@Override
-	public Order update(Order t) {
-		// TODO Auto-generated method stub
+	public Order update(Order order) {
+		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+				Statement statement1 = connection.createStatement();
+				Statement statement2 = connection.createStatement();) {
+			statement1.executeUpdate("UPDATE orders SET customerID = '" + order.getCustomerID() + "', totalPrice = '"
+					+ order.getTotalPrice() + ", WHERE orderID ='" + order.getOrderID() + "';");
+			statement2.executeUpdate("UPDATE orderline SET itemID= '" + order.getItemID() + "', quantity = '"
+					+ order.getQuantity() + "' WHERE orderID = '" + order.getOrderID() + "';");
+			return readOrder(order.getOrderID());
+		} catch (Exception e) {
+			LOGGER.debug(e.getStackTrace());
+			LOGGER.info(e.getStackTrace());
+		}
 		return null;
 	}
 
