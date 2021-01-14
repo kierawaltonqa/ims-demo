@@ -16,6 +16,12 @@ public class Order {
 		this.itemID = itemID;
 	}
 
+	public Order(Long customerID, String totalPrice) {
+		super();
+		this.customerID = customerID;
+		this.totalPrice = totalPrice;
+	}
+
 	// use this in update method in orderController
 	public Order(Long orderID, Long customerID, Long itemID, int quantity) {
 		this.orderID = orderID;

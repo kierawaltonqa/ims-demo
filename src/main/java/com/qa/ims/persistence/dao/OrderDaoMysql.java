@@ -73,43 +73,18 @@ public class OrderDaoMysql implements Dao<Order> {
 		return new ArrayList<>();
 	}
 
-//	public Order readLatest() {
-//		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-//				Statement statement = connection.createStatement();
-//				ResultSet resultSet = statement
+	public Order readLatest() {
+		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("select * from orders ORDER BY orderID desc limit 1;");) {
+			;
 //						.executeQuery("SELECT * FROM orderline ol JOIN orders o ON ol.orderID=o.orderID"
-//								+ " ORDER BY orderlineID DESC LIMIT 1;");) {
-//			resultSet.next();
-//			return orderFromResultSet(resultSet);
-//		} catch (Exception e) {
-//			LOGGER.debug(e.getStackTrace());
-//			LOGGER.error(e.getStackTrace());
-//		}
-//		return null;
-//	}
-	public Order readLatest1() {
-		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("select * from orders order by orderID desc limit 1;");) {
+//								+ " ORDER BY o.orderID DESC LIMIT 1;");) {
 			resultSet.next();
 			return orderFromResultSet(resultSet);
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
-			LOGGER.debug(e.getStackTrace());
-		}
-		return null;
-	}
-
-	public Order readLatest2() {
-		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement
-						.executeQuery("select * from orderline order by orderlineID desc limit 1;");) {
-			resultSet.next();
-			return orderFromResultSet(resultSet);
-		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.debug(e.getStackTrace());
+			LOGGER.error(e.getStackTrace());
 		}
 		return null;
 	}
@@ -117,39 +92,19 @@ public class OrderDaoMysql implements Dao<Order> {
 	@Override
 	public Order create(Order order) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement1 = connection.createStatement();) {
-			statement1.executeUpdate("insert into orders(customerID, totalPrice) values('" + order.getCustomerID()
-					+ order.getTotalPrice() + "')");
-			return readLatest1();
-		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getStackTrace());
-		}
-		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+				Statement statement1 = connection.createStatement();
 				Statement statement2 = connection.createStatement();) {
-			statement2.executeUpdate("insert into orders(customerID, totalPrice) values('" + order.getCustomerID()
-					+ order.getTotalPrice() + "')");
-			return readLatest2();
+			statement1.executeUpdate("insert into orders(customerID, totalPrice) values('" + order.getCustomerID()
+					+ "', '" + order.getTotalPrice() + "')");
+			statement2.executeUpdate("insert into orderline(itemID,orderID,quantity) values('" + order.getOrderID()
+					+ "','" + order.getOrderID() + "','" + order.getQuantity() + "')");
+			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getStackTrace());
 		}
 		return null;
 	}
-
-//		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-//				Statement statement1 = connection.createStatement();
-//				Statement statement2 = connection.createStatement();) {
-//			statement1.executeUpdate("insert into orders(customerID, totalPrice) values('" + order.getCustomerID()
-//					+ "', '" + order.getTotalPrice() + "')");
-//			statement2.executeUpdate("insert into orderline(itemID,quantity) values('" + order.getOrderID() + "','"
-//					+ order.getQuantity() + "')");
-//			return readLatest();
-//		} catch (Exception e) {
-//			LOGGER.debug(e.getStackTrace());
-//			LOGGER.error(e.getStackTrace());
-//		}
-//		return null;
 
 	public Order readOrder(Long orderID) {
 
