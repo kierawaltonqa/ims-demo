@@ -116,10 +116,10 @@ public class ItemDaoMysql implements Dao<Item> {
 	}
 
 	@Override
-	public void delete(long id) {
+	public void delete(long itemID) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("DELETE FROM items WHERE itemID = '" + id + "';");
+			statement.executeUpdate("DELETE FROM items WHERE itemID = '" + itemID + "';");
 			System.out.println("item deleted");
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
