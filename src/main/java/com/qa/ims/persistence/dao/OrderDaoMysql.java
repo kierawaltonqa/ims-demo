@@ -78,7 +78,7 @@ public class OrderDaoMysql implements Dao<Order> {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement
-						.executeQuery("select orderID from orders ORDER BY orderID desc limit 1;");) {
+						.executeQuery("SELECT orderID FROM orders ORDER BY orderID DESC LIMIT 1;");) {
 			resultSet.next();
 			return resultSet.getLong("orderID");
 		} catch (Exception e) {

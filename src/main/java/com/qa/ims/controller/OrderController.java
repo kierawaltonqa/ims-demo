@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.services.CrudServices;
 import com.qa.ims.utils.Utils;
@@ -14,12 +13,16 @@ public class OrderController implements CrudController<Order> {
 	public static final Logger LOGGER = Logger.getLogger(OrderController.class);
 
 	private CrudServices<Order> orderService;
-	private CrudServices<Item> itemService;
+//	private CrudServices<Item> itemService;
 
-	public OrderController(CrudServices<Order> orderService, CrudServices<Item> itemService) {
+//	public OrderController(CrudServices<Order> orderService, CrudServices<Item> itemService) {
+//		super();
+//		this.orderService = orderService;
+//		this.itemService = itemService;
+//	}
+	public OrderController(CrudServices<Order> orderService) {
 		super();
 		this.orderService = orderService;
-		this.itemService = itemService;
 	}
 
 	String getInput() {
