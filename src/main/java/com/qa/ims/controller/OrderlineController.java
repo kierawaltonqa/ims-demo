@@ -41,6 +41,7 @@ public class OrderlineController implements CrudController<Orderline> {
 		LOGGER.info("please enter the quantity of the item in the order");
 		int quantity = Integer.parseInt(getInput());
 		Orderline orderline = orderlineService.create(new Orderline(orderID, itemID, quantity));
+		LOGGER.info("orderline record created");
 		return orderline;
 	}
 

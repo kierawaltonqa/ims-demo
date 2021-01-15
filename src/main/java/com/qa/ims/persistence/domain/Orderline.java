@@ -18,6 +18,11 @@ public class Orderline {
 		this.quantity = quantity;
 	}
 
+	@Override
+	public String toString() {
+		return "orderID: " + orderID + ", itemID: " + itemID + ", quantity: " + quantity;
+	}
+
 	public Long getOrderID() {
 		return orderID;
 	}

@@ -65,10 +65,10 @@ public class OrderController implements CrudController<Order> {
 //	}
 		LOGGER.info("enter the customerID for the order you wish to create");
 		Long customerID = Long.valueOf(getInput());
-		LOGGER.info("enter the ID of an item you wish to add to this order");
-		Long itemID = Long.valueOf(getInput());
-		LOGGER.info("enter the quantity of this item you would like to add");
-		int quantity = Integer.parseInt(getInput());
+//		LOGGER.info("enter the ID of an item you wish to add to this order");
+//		Long itemID = Long.valueOf(getInput());
+//		LOGGER.info("enter the quantity of this item you would like to add");
+//		int quantity = Integer.parseInt(getInput());
 		LOGGER.info("enter the total price of this order");
 		int totalPrice = Integer.parseInt(getInput());
 		Order order = orderService.create(new Order(customerID, totalPrice));
