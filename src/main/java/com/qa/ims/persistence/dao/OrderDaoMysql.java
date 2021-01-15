@@ -73,13 +73,25 @@ public class OrderDaoMysql implements Dao<Order> {
 		return new ArrayList<>();
 	}
 
+//method to get the current ID in an order (used in the create method)
+	public Long getCurrentOrderID() {
+		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement
+						.executeQuery("select orderID from orders ORDER BY orderID desc limit 1;");) {
+			resultSet.next();
+			return resultSet.getLong("orderID");
+		} catch (Exception e) {
+			LOGGER.debug(e.getStackTrace());
+			LOGGER.error(e.getStackTrace());
+		}
+		return null;
+	}
+
 	public Order readLatest() {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery("select * from orders ORDER BY orderID desc limit 1;");) {
-			;
-//						.executeQuery("SELECT * FROM orderline ol JOIN orders o ON ol.orderID=o.orderID"
-//								+ " ORDER BY o.orderID DESC LIMIT 1;");) {
 			resultSet.next();
 			return orderFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -90,14 +102,36 @@ public class OrderDaoMysql implements Dao<Order> {
 	}
 
 	@Override
+//	public Order create(Order order) {
+//		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+//				Statement statement1 = connection.createStatement();) {
+//			statement1.executeUpdate("insert into orders(customerID, totalPrice) values('" + order.getCustomerID()
+//					+ "', '" + order.getTotalPrice() + "')");
+//		} catch (Exception e) {
+//			LOGGER.debug(e.getStackTrace());
+//			LOGGER.error(e.getStackTrace());
+//		}
+//		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+//				Statement statement2 = connection.createStatement();) {
+//			statement2.executeUpdate("insert into orderline(itemID,orderID,quantity) values('" + order.getOrderID()
+//					+ "','" + order.getOrderID() + "','" + order.getQuantity() + "')");
+//			return readLatest2();
+//		} catch (Exception e) {
+//			LOGGER.debug(e.getStackTrace());
+//			LOGGER.error(e.getStackTrace());
+//		}
+//		return null;
+//	}
+
+//	}
 	public Order create(Order order) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement1 = connection.createStatement();
 				Statement statement2 = connection.createStatement();) {
-			statement1.executeUpdate("insert into orders(customerID, totalPrice) values('" + order.getCustomerID()
+			statement1.executeUpdate("INSERT INTO orders(customerID, totalPrice) VALUES('" + order.getCustomerID()
 					+ "', '" + order.getTotalPrice() + "')");
-			statement2.executeUpdate("insert into orderline(itemID,orderID,quantity) values('" + order.getOrderID()
-					+ "','" + order.getOrderID() + "','" + order.getQuantity() + "')");
+			statement2.executeUpdate("insert into orderline(itemID,orderID,quantity) values('" + order.getItemID()
+					+ "','" + getCurrentOrderID() + "','" + order.getQuantity() + "')");
 			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
