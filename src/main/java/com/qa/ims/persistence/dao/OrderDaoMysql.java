@@ -37,9 +37,9 @@ public class OrderDaoMysql implements Dao<Order> {
 		Long orderID = resultSet.getLong("orderID");
 		Long customerID = resultSet.getLong("customerID");
 		int totalPrice = resultSet.getInt("totalPrice");
-		int quantity = resultSet.getInt("quantity");
-		Long itemID = resultSet.getLong("itemID");
-		return new Order(orderID, customerID, totalPrice, itemID, quantity);
+//		int quantity = resultSet.getInt("quantity");
+//		Long itemID = resultSet.getLong("itemID");
+		return new Order(orderID, customerID, totalPrice);
 	}
 //	public Order itemPriceCalc(Order order) {
 //		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
@@ -59,8 +59,7 @@ public class OrderDaoMysql implements Dao<Order> {
 	public List<Order> readAll() {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement
-						.executeQuery("SELECT * FROM orderline ol JOIN orders o ON ol.orderID=o.orderID");) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders");) {
 			ArrayList<Order> orders = new ArrayList<>();
 			while (resultSet.next()) {
 				orders.add(orderFromResultSet(resultSet));
@@ -102,36 +101,16 @@ public class OrderDaoMysql implements Dao<Order> {
 	}
 
 	@Override
-//	public Order create(Order order) {
-//		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-//				Statement statement1 = connection.createStatement();) {
-//			statement1.executeUpdate("insert into orders(customerID, totalPrice) values('" + order.getCustomerID()
-//					+ "', '" + order.getTotalPrice() + "')");
-//		} catch (Exception e) {
-//			LOGGER.debug(e.getStackTrace());
-//			LOGGER.error(e.getStackTrace());
-//		}
-//		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-//				Statement statement2 = connection.createStatement();) {
-//			statement2.executeUpdate("insert into orderline(itemID,orderID,quantity) values('" + order.getOrderID()
-//					+ "','" + order.getOrderID() + "','" + order.getQuantity() + "')");
-//			return readLatest2();
-//		} catch (Exception e) {
-//			LOGGER.debug(e.getStackTrace());
-//			LOGGER.error(e.getStackTrace());
-//		}
-//		return null;
-//	}
 
-//	}
 	public Order create(Order order) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement1 = connection.createStatement();
-				Statement statement2 = connection.createStatement();) {
+				Statement statement1 = connection.createStatement();) {
+			// Statement statement2 = connection.createStatement();) {
 			statement1.executeUpdate("INSERT INTO orders(customerID, totalPrice) VALUES('" + order.getCustomerID()
 					+ "', '" + order.getTotalPrice() + "')");
-			statement2.executeUpdate("insert into orderline(itemID,orderID,quantity) values('" + order.getItemID()
-					+ "','" + getCurrentOrderID() + "','" + order.getQuantity() + "')");
+			// statement2.executeUpdate("insert into orderline(itemID,orderID,quantity)
+			// values('" + order.getItemID()
+			// + "','" + getCurrentOrderID() + "','" + order.getQuantity() + "')");
 			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
@@ -158,12 +137,12 @@ public class OrderDaoMysql implements Dao<Order> {
 	@Override
 	public Order update(Order order) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement1 = connection.createStatement();
-				Statement statement2 = connection.createStatement();) {
+				Statement statement1 = connection.createStatement();) {
+//				Statement statement2 = connection.createStatement();) {
 			statement1.executeUpdate("UPDATE orders SET customerID = '" + order.getCustomerID() + "', totalPrice = '"
 					+ order.getTotalPrice() + ", WHERE orderID ='" + order.getOrderID() + "';");
-			statement2.executeUpdate("UPDATE orderline SET itemID= '" + order.getItemID() + "', quantity = '"
-					+ order.getQuantity() + "' WHERE orderID = '" + order.getOrderID() + "';");
+//			statement2.executeUpdate("UPDATE orderline SET itemID= '" + order.getItemID() + "', quantity = '"
+//					+ order.getQuantity() + "' WHERE orderID = '" + order.getOrderID() + "';");
 			return readOrder(order.getOrderID());
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
