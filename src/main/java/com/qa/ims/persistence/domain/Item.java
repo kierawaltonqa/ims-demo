@@ -4,15 +4,15 @@ public class Item {
 
 	private Long itemID;
 	private String itemName;
-	private String itemPrice;
+	private int itemPrice;
 
-	public Item(String itemName, String itemPrice) {
+	public Item(String itemName, int itemPrice) {
 		super();
 		this.itemName = itemName;
 		this.itemPrice = itemPrice;
 	}
 
-	public Item(Long itemID, String itemName, String itemPrice) {
+	public Item(Long itemID, String itemName, int itemPrice) {
 		super();
 		this.itemID = itemID;
 		this.itemName = itemName;
@@ -40,11 +40,11 @@ public class Item {
 		this.itemName = itemName;
 	}
 
-	public String getItemPrice() {
+	public int getItemPrice() {
 		return itemPrice;
 	}
 
-	public void setItemPrice(String itemPrice) {
+	public void setItemPrice(int itemPrice) {
 		this.itemPrice = itemPrice;
 	}
 
@@ -59,7 +59,7 @@ public class Item {
 		int result = 1;
 		result = prime * result + ((itemID == null) ? 0 : itemID.hashCode());
 		result = prime * result + ((itemName == null) ? 0 : itemName.hashCode());
-		result = prime * result + ((itemPrice == null) ? 0 : itemPrice.hashCode());
+		result = prime * result + itemPrice;
 		return result;
 	}
 
@@ -82,10 +82,7 @@ public class Item {
 				return false;
 		} else if (!itemName.equals(other.itemName))
 			return false;
-		if (itemPrice == null) {
-			if (other.itemPrice != null)
-				return false;
-		} else if (!itemPrice.equals(other.itemPrice))
+		if (itemPrice != other.itemPrice)
 			return false;
 		return true;
 	}

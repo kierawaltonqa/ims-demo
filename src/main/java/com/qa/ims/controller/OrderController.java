@@ -33,23 +33,36 @@ public class OrderController implements CrudController<Order> {
 			LOGGER.info(order.toString());
 		}
 		return orders;
-
 	}
 
 	@Override
 	public Order create() {
+		List<Item> items = itemService.readAll();
 		LOGGER.info("enter the customerID of the order you wish to create");
 		Long customerID = Long.valueOf(getInput());
-		LOGGER.info("enter the ID of the item you want to add, enter quit to finish adding items");
-		while (getInput() != "quit") {
-			Long itemID = Long.valueOf(getInput());
-			LOGGER.info("enter the quantity of this item you would like to add");
+		LOGGER.info("enter the ID of the item you want to add");
+		Long itemID = Long.valueOf(getInput());
+		boolean bool = items.contains(itemService.create(new Item(itemID)));
+		while (bool == true) {
+			LOGGER.info("enter the quantity of this item");
 			int quantity = Integer.parseInt(getInput());
-
-//			Item item = itemService.create(new Item(itemID));
-//			if(itemService.equals(item)) {
-//				continue;
+			LOGGER.info("enter the total price of this order");
+			int totalPrice = Integer.parseInt(getInput());
+			Order order = orderService.create(new Order(customerID, totalPrice, itemID, quantity));
+			return order;
 		}
+		return null;
+
+//		while(getInput() != "quit") {
+//			Long itemID = Long.valueOf(getInput());
+//			boolean bool = items.contains(itemService.create(new Item(itemID)));
+//			if(bool == true) {
+//				LOGGER.info("enter the quantity of this item");
+//				int quantity = Integer.parseInt(getInput());
+//				Order order = orderService.create(new Order(customerID, itemID, quantity));
+//				return order;
+//			}
+//		}LOGGER.info(");
 	}
 
 //		LOGGER.info("enter the the ID of an item you wish to add to this order");
@@ -73,7 +86,7 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("enter the quantity of this item you wish to add");
 		int quantity = Integer.parseInt(getInput());
 		LOGGER.info("enter the total price of this order");
-		String totalPrice = getInput();
+		int totalPrice = Integer.parseInt(getInput());
 
 		Order order = orderService.create(new Order(orderID, customerID, totalPrice, itemID, quantity));
 		return order;

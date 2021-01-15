@@ -8,7 +8,7 @@ public class Order {
 
 	private Long orderID;
 	private Long customerID;
-	private String totalPrice;
+	private int totalPrice;
 	private Long itemID;
 	private int quantity;
 
@@ -16,7 +16,7 @@ public class Order {
 		this.itemID = itemID;
 	}
 
-	public Order(Long customerID, String totalPrice) {
+	public Order(Long customerID, int totalPrice) {
 		super();
 		this.customerID = customerID;
 		this.totalPrice = totalPrice;
@@ -30,7 +30,7 @@ public class Order {
 		this.quantity = quantity;
 	}
 
-	public Order(Long orderID, Long customerID, String totalPrice, Long itemID, int quantity) {
+	public Order(Long orderID, Long customerID, int totalPrice, Long itemID, int quantity) {
 		this.orderID = orderID;
 		this.customerID = customerID;
 		this.totalPrice = totalPrice;
@@ -44,7 +44,7 @@ public class Order {
 		this.quantity = quantity;
 	}
 
-	public Order(Long customerID, String totalPrice, Long itemID, int quantity) {
+	public Order(Long customerID, int totalPrice, Long itemID, int quantity) {
 		this.customerID = customerID;
 		this.totalPrice = totalPrice;
 		this.itemID = itemID;
@@ -73,11 +73,11 @@ public class Order {
 		this.customerID = customerID;
 	}
 
-	public String getTotalPrice() {
+	public int getTotalPrice() {
 		return totalPrice;
 	}
 
-	public void setTotalPrice(String totalPrice) {
+	public void setTotalPrice(int totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 
@@ -105,7 +105,7 @@ public class Order {
 		result = prime * result + ((itemID == null) ? 0 : itemID.hashCode());
 		result = prime * result + ((orderID == null) ? 0 : orderID.hashCode());
 		result = prime * result + quantity;
-		result = prime * result + ((totalPrice == null) ? 0 : totalPrice.hashCode());
+		result = prime * result + totalPrice;
 		return result;
 	}
 
@@ -135,10 +135,7 @@ public class Order {
 			return false;
 		if (quantity != other.quantity)
 			return false;
-		if (totalPrice == null) {
-			if (other.totalPrice != null)
-				return false;
-		} else if (!totalPrice.equals(other.totalPrice))
+		if (totalPrice != other.totalPrice)
 			return false;
 		return true;
 	}
