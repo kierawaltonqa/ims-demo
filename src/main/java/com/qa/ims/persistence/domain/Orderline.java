@@ -4,6 +4,7 @@ public class Orderline {
 	private Long orderID;
 	private Long itemID;
 	private int quantity;
+	private Long orderlineID;
 
 	public Orderline(Long orderID, Long itemID, int quantity) {
 		super();
@@ -18,9 +19,18 @@ public class Orderline {
 		this.quantity = quantity;
 	}
 
+	public Orderline(Long orderID, Long itemID, int quantity, Long orderlineID) {
+		super();
+		this.orderID = orderID;
+		this.itemID = itemID;
+		this.quantity = quantity;
+		this.orderlineID = orderlineID;
+	}
+
 	@Override
 	public String toString() {
-		return "orderID: " + orderID + ", itemID: " + itemID + ", quantity: " + quantity;
+		return "orderlineID: " + orderlineID + " orderID: " + orderID + ", itemID: " + itemID + ", quantity: "
+				+ quantity;
 	}
 
 	public Long getOrderID() {
@@ -47,12 +57,21 @@ public class Orderline {
 		this.quantity = quantity;
 	}
 
+	public Long getOrderlineID() {
+		return orderlineID;
+	}
+
+	public void setOrderlineID(Long orderlineID) {
+		this.orderlineID = orderlineID;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((itemID == null) ? 0 : itemID.hashCode());
 		result = prime * result + ((orderID == null) ? 0 : orderID.hashCode());
+		result = prime * result + ((orderlineID == null) ? 0 : orderlineID.hashCode());
 		result = prime * result + quantity;
 		return result;
 	}
@@ -75,6 +94,11 @@ public class Orderline {
 			if (other.orderID != null)
 				return false;
 		} else if (!orderID.equals(other.orderID))
+			return false;
+		if (orderlineID == null) {
+			if (other.orderlineID != null)
+				return false;
+		} else if (!orderlineID.equals(other.orderlineID))
 			return false;
 		if (quantity != other.quantity)
 			return false;

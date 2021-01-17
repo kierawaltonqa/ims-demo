@@ -5,13 +5,10 @@ public class Order {
 	private Long orderID;
 	private Long customerID;
 	private int totalPrice;
-
+//added these two attributes
 //	private Long itemID;
 //	private int quantity;
-
-//	public Order(Long itemID) {
-//		this.itemID = itemID;
-//	}
+//	private List<Long> items;
 
 	public Order(Long customerID, int totalPrice) {
 		super();
@@ -25,6 +22,16 @@ public class Order {
 		this.customerID = customerID;
 		this.totalPrice = totalPrice;
 	}
+
+//	public Order(Long orderID, Long customerID, int totalPrice, Long itemID, int quantity, List<Long> items) {
+//		super();
+//		this.orderID = orderID;
+//		this.customerID = customerID;
+//		this.totalPrice = totalPrice;
+//		this.itemID = itemID;
+//		this.quantity = quantity;
+//		this.items = items;
+//	}
 
 	@Override
 	public String toString() {
@@ -90,32 +97,3 @@ public class Order {
 	}
 
 }
-
-//	 use this in update method in orderController
-//	public Order(Long orderID, Long customerID, Long itemID, int quantity) {
-//		this.orderID = orderID;
-//		this.customerID = customerID;
-//		this.itemID = itemID;
-//		this.quantity = quantity;
-//	}
-
-//	public Order(Long orderID, Long customerID, int totalPrice, Long itemID, int quantity) {
-//		this.orderID = orderID;
-//		this.customerID = customerID;
-//		this.totalPrice = totalPrice;
-//		this.itemID = itemID;
-//		this.quantity = quantity;
-//	}
-//
-//	public Order(Long customerID, Long itemID, int quantity) {
-//		this.customerID = customerID;
-//		this.itemID = itemID;
-//		this.quantity = quantity;
-//	}
-//
-//	public Order(Long customerID, int totalPrice, Long itemID, int quantity) {
-//		this.customerID = customerID;
-//		this.totalPrice = totalPrice;
-//		this.itemID = itemID;
-//		this.quantity = quantity;
-//	}

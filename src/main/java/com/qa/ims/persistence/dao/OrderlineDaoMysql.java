@@ -37,7 +37,8 @@ public class OrderlineDaoMysql implements Dao<Orderline> {
 		Long orderID = resultSet.getLong("orderID");
 		Long itemID = resultSet.getLong("itemID");
 		int quantity = resultSet.getInt("quantity");
-		return new Orderline(orderID, itemID, quantity);
+		Long orderlineID = resultSet.getLong("orderlineID");
+		return new Orderline(orderID, itemID, quantity, orderlineID);
 	}
 
 	@Override
@@ -61,7 +62,7 @@ public class OrderlineDaoMysql implements Dao<Orderline> {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement
-						.executeQuery("SELECT * FROM orderline ORDER BY orderID DESC LIMIT 1");) {
+						.executeQuery("SELECT * FROM orderline ORDER BY orderlineID DESC LIMIT 1");) {
 			resultSet.next();
 			return orderlineFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -85,11 +86,12 @@ public class OrderlineDaoMysql implements Dao<Orderline> {
 		return null;
 	}
 
-	public Orderline readOrderline(Long orderID) {
+	public Orderline readOrderline(Long orderlineID) {
 
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			ResultSet resultSet = statement.executeQuery("SELECT FROM orderline WHERE orderID='" + orderID + "';");
+			ResultSet resultSet = statement
+					.executeQuery("SELECT FROM orderline WHERE orderlineID='" + orderlineID + "';");
 			return orderlineFromResultSet(resultSet);
 
 		} catch (Exception e) {
@@ -105,7 +107,7 @@ public class OrderlineDaoMysql implements Dao<Orderline> {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
 			statement.executeUpdate("UPDATE orderline SET itemID = '" + orderline.getItemID() + "', quantity = '"
-					+ orderline.getQuantity() + "' WHERE orderID = '" + orderline.getOrderID() + "');");
+					+ orderline.getQuantity() + "' WHERE orderlineID = '" + orderline.getOrderlineID() + "');");
 			return readOrderline(orderline.getOrderID());
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
@@ -118,7 +120,7 @@ public class OrderlineDaoMysql implements Dao<Orderline> {
 	public void delete(long id) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("DELETE FROM orderline WHERE orderID = '" + id + ",;");
+			statement.executeUpdate("DELETE FROM orderline WHERE orderlineID = '" + id + ",;");
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());

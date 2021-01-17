@@ -40,7 +40,6 @@ public class ItemDaoMysql implements Dao<Item> {
 		return new Item(itemID, itemName, itemPrice);
 
 	}
-
 	/*
 	 * reads all items from the database and returns a list of those items
 	 */

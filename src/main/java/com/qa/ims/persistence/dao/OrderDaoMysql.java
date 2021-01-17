@@ -41,16 +41,20 @@ public class OrderDaoMysql implements Dao<Order> {
 //		Long itemID = resultSet.getLong("itemID");
 		return new Order(orderID, customerID, totalPrice);
 	}
-//	public Order itemPriceCalc(Order order) {
+
+//	public int totalPriceCalc(Order order) {
 //		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 //				Statement statement = connection.createStatement();
 //				ResultSet resultSet = statement
-//						.executeQuery("SELECT itemPrice FROM items WHERE itemID= '" + order.getItemID() + "';");) {
-//			resultSet.next();
-//			return orderFromResultSet(resultSet);
+//						.executeQuery("SELECT itemPrice FROM items WHERE itemID = '" + itemID + "';");) {
+//			for(Item item : items) {
+//				int itemPrice = resultSet.getInt("itemPrice");
+//				int totalPrice = itemPrice * 
+//			}
+//			return itemPrice;
 //		} catch (Exception e) {
 //			LOGGER.debug(e.getStackTrace());
-//			LOGGER.error(e.getStackTrace());
+//			LOGGER.info(e.getStackTrace());
 //		}
 //		return null;
 //	}
@@ -72,21 +76,6 @@ public class OrderDaoMysql implements Dao<Order> {
 		return new ArrayList<>();
 	}
 
-//method to get the current ID in an order (used in the create method)
-	public Long getCurrentOrderID() {
-		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement
-						.executeQuery("SELECT orderID FROM orders ORDER BY orderID DESC LIMIT 1;");) {
-			resultSet.next();
-			return resultSet.getLong("orderID");
-		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getStackTrace());
-		}
-		return null;
-	}
-
 	public Order readLatest() {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
@@ -105,12 +94,8 @@ public class OrderDaoMysql implements Dao<Order> {
 	public Order create(Order order) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement1 = connection.createStatement();) {
-			// Statement statement2 = connection.createStatement();) {
 			statement1.executeUpdate("INSERT INTO orders(customerID, totalPrice) VALUES('" + order.getCustomerID()
 					+ "', '" + order.getTotalPrice() + "')");
-			// statement2.executeUpdate("insert into orderline(itemID,orderID,quantity)
-			// values('" + order.getItemID()
-			// + "','" + getCurrentOrderID() + "','" + order.getQuantity() + "')");
 			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
@@ -138,11 +123,8 @@ public class OrderDaoMysql implements Dao<Order> {
 	public Order update(Order order) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement1 = connection.createStatement();) {
-//				Statement statement2 = connection.createStatement();) {
 			statement1.executeUpdate("UPDATE orders SET customerID = '" + order.getCustomerID() + "', totalPrice = '"
 					+ order.getTotalPrice() + ", WHERE orderID ='" + order.getOrderID() + "';");
-//			statement2.executeUpdate("UPDATE orderline SET itemID= '" + order.getItemID() + "', quantity = '"
-//					+ order.getQuantity() + "' WHERE orderID = '" + order.getOrderID() + "';");
 			return readOrder(order.getOrderID());
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());

@@ -47,22 +47,24 @@ public class OrderlineController implements CrudController<Orderline> {
 
 	@Override
 	public Orderline update() {
-		LOGGER.info("please enter the ID of the order you wish to update");
+		LOGGER.info("please enter the orderlineID of the order you wish to update");
+		Long orderlineID = Long.valueOf(getInput());
+		LOGGER.info("please enter the orderID of the order");
 		Long orderID = Long.valueOf(getInput());
 		LOGGER.info("please enter the ID of the item you wish to add");
 		Long itemID = Long.valueOf(getInput());
 		LOGGER.info("please enter the quantity of this item you want to add");
 		int quantity = Integer.parseInt(getInput());
-		Orderline orderline = orderlineService.create(new Orderline(orderID, itemID, quantity));
-		LOGGER.info("this order has been recorded in the orderline!");
+		Orderline orderline = orderlineService.create(new Orderline(orderID, itemID, quantity, orderlineID));
+		LOGGER.info("orderline record updated");
 		return orderline;
 	}
 
 	@Override
 	public void delete() {
-		LOGGER.info("please enter the ID of the order you wish to delete from the orderline");
-		Long orderID = Long.valueOf(getInput());
-		orderlineService.delete(orderID);
+		LOGGER.info("please enter the orderlineID of the order you wish to delete from the orderline");
+		Long orderlineID = Long.valueOf(getInput());
+		orderlineService.delete(orderlineID);
 		LOGGER.info("order deleted from orderline");
 
 	}
