@@ -1,8 +1,13 @@
 package com.qa.ims.persistence.dao;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.junit.Before;
@@ -10,6 +15,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.qa.ims.Ims;
+import com.qa.ims.persistence.domain.Item;
 
 public class ItemDaoMysqlTest {
 
@@ -41,6 +47,59 @@ public class ItemDaoMysqlTest {
 	public void createTest() {
 		ItemDaoMysql itemDaoMysql = new ItemDaoMysql(jdbcConnectionUrl, username, password);
 		String itemName = "candle";
-		int itemPrice = 5;
+		Double itemPrice = 5.0;
+		Item item = new Item(itemName, itemPrice);
+		Item savedItem = new Item(1L, itemName, itemPrice);
+		item = itemDaoMysql.create(item);
+		assertEquals(savedItem, item);
 	}
+
+	@Test
+	public void readAllTest() {
+		ItemDaoMysql itemDaoMysql = new ItemDaoMysql(jdbcConnectionUrl, username, password);
+		List<Item> items = new ArrayList<>();
+		String itemName = "candle";
+		Double itemPrice = 5.0;
+		Item item = new Item(1L, itemName, itemPrice);
+		Item savedItem = new Item(1L, itemName, itemPrice);
+		items.add(item);
+		items.add(savedItem);
+		assertEquals(savedItem, item);
+	}
+
+	@Test
+	public void readTest() {
+		ItemDaoMysql itemDaoMysql = new ItemDaoMysql(jdbcConnectionUrl, username, password);
+		String itemName = "candle";
+		Double itemPrice = 5.0;
+		Item item = new Item(1L, itemName, itemPrice);
+		Item savedItem = new Item(1L, itemName, itemPrice);
+		item.setItemID(1L);
+		itemDaoMysql.readItem(1L);
+		assertEquals(savedItem, item);
+	}
+
+	@Test
+	public void deleteTest() {
+		ItemDaoMysql itemDaoMysql = new ItemDaoMysql(jdbcConnectionUrl, username, password);
+		String itemName = "candle";
+		Double itemPrice = 5.0;
+		Item item = new Item(1L, itemName, itemPrice);
+		Item savedItem = new Item(1L, itemName, itemPrice);
+		item.setItemID(null);
+		itemDaoMysql.delete(1L);
+		assertNotEquals(savedItem, item);
+	}
+
+	@Test
+	public void updateTest() {
+		ItemDaoMysql itemDaoMysql = new ItemDaoMysql(jdbcConnectionUrl, username, password);
+		String itemName = "candle";
+		Double itemPrice = 5.0;
+		Item item = new Item(1L, itemName, itemPrice);
+		Item savedItem = new Item(1L, itemName, itemPrice);
+		itemDaoMysql.update(item);
+		assertEquals(savedItem, item);
+	}
+
 }
