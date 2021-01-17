@@ -21,7 +21,7 @@ public class ItemServicesTest {
 
 	@Test
 	public void itemServicesCreate() {
-		Item item = new Item("candle", "£5");
+		Item item = new Item("candle", 5.0);
 		itemServices.create(item);
 		Mockito.verify(itemDao, Mockito.times(1)).create(item);
 	}
@@ -32,7 +32,7 @@ public class ItemServicesTest {
 	}
 
 	public void itemServicesUpdate() {
-		Item item = new Item("candle", "£5");
+		Item item = new Item("candle", 5.0);
 		itemServices.update(item);
 		Mockito.verify(itemDao, Mockito.times(1)).update(item);
 	}

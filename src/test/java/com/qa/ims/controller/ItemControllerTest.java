@@ -30,10 +30,10 @@ public class ItemControllerTest {
 	public void readAllTest() {
 		ItemController itemController = new ItemController(itemServices);
 		List<Item> items = new ArrayList<>();
-		items.add(new Item("candle", "£5"));
-		items.add(new Item("plant", "£12"));
-		items.add(new Item("chair", "£30"));
-		items.add(new Item("table", "£50"));
+		items.add(new Item("candle", 5.0));
+		items.add(new Item("plant", 12.0));
+		items.add(new Item("chair", 30.0));
+		items.add(new Item("table", 50.0));
 		Mockito.when(itemServices.readAll()).thenReturn(items);
 		assertEquals(items, itemController.readAll());
 	}
@@ -41,10 +41,10 @@ public class ItemControllerTest {
 	@Test
 	public void createTest() {
 		String itemName = "candle";
-		String itemPrice = "£5";
+		Double itemPrice = 5.0;
 		Mockito.doReturn(itemName, itemPrice).when(itemController).getInput();
 		Item item = new Item(itemName, itemPrice);
-		Item savedItem = new Item(1L, "candle", "plant");
+		Item savedItem = new Item(1L, "candle", 5.0);
 		Mockito.when(itemServices.create(item)).thenReturn(savedItem);
 		assertEquals(savedItem, itemController.create());
 	}
@@ -53,7 +53,7 @@ public class ItemControllerTest {
 	public void updateTest() {
 		String itemID = "1";
 		String itemName = "candle";
-		String itemPrice = "£5";
+		Double itemPrice = 5.0;
 		Mockito.doReturn(itemID, itemName, itemPrice).when(itemController).getInput();
 		Item item = new Item(1L, itemName, itemPrice);
 		Mockito.when(itemServices.update(item)).thenReturn(item);

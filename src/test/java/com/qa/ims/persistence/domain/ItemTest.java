@@ -16,8 +16,8 @@ public class ItemTest {
 
 	@Before
 	public void setUp() {
-		item = new Item(1L, "candle", "£5");
-		other = new Item(1L, "candle", "£5");
+		item = new Item(1L, "candle", 5.0);
+		other = new Item(1L, "candle", 5.0);
 	}
 
 	@Test
@@ -43,7 +43,7 @@ public class ItemTest {
 	public void createItemWithItemID() {
 		assertEquals(1L, item.getItemID(), 0);
 		assertEquals("candle", item.getItemName());
-		assertEquals("£5", item.getItemPrice());
+		assertEquals(5.0, item.getItemPrice(), 0);
 	}
 
 	@Test
@@ -114,13 +114,13 @@ public class ItemTest {
 
 	@Test
 	public void otherPriceIsDifferent() {
-		other.setItemPrice("£10");
+		other.setItemPrice(10.0);
 		assertFalse(other.equals(item));
 	}
 
 	@Test
 	public void constructorWithoutID() {
-		Item item = new Item("candle", "£5");
+		Item item = new Item("candle", 5.0);
 		assertNull(item.getItemID());
 		assertNotNull(item.getItemName());
 		assertNotNull(item.getItemPrice());
@@ -140,7 +140,7 @@ public class ItemTest {
 
 	@Test
 	public void toStringTest() {
-		String toString = "itemID: 1, itemName: candle, itemPrice: £5";
+		String toString = "itemID: 1, itemName: candle, itemPrice: 5";
 		assertEquals(toString, item.toString());
 
 	}
