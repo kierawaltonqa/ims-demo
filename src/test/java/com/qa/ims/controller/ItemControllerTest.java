@@ -42,7 +42,7 @@ public class ItemControllerTest {
 	public void createTest() {
 		String itemName = "candle";
 		Double itemPrice = 5.0;
-		Mockito.doReturn(itemName, itemPrice).when(itemController).getInput();
+		Mockito.doReturn(itemName, itemPrice.toString()).when(itemController).getInput();
 		Item item = new Item(itemName, itemPrice);
 		Item savedItem = new Item(1L, "candle", 5.0);
 		Mockito.when(itemServices.create(item)).thenReturn(savedItem);
@@ -54,7 +54,7 @@ public class ItemControllerTest {
 		String itemID = "1";
 		String itemName = "candle";
 		Double itemPrice = 5.0;
-		Mockito.doReturn(itemID, itemName, itemPrice).when(itemController).getInput();
+		Mockito.doReturn(itemID, itemName, itemPrice.toString()).when(itemController).getInput();
 		Item item = new Item(1L, itemName, itemPrice);
 		Mockito.when(itemServices.update(item)).thenReturn(item);
 		assertEquals(item, itemController.update());
