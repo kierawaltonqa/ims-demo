@@ -1,7 +1,7 @@
 Coverage: 34%
 # Project Title
 
-One Paragraph of project description goes here
+This project is an application, developed and implemented through java, which allows users to create, read, update and delete from tables in an SQL database. The database has 4 tables - customers, items, orders and orderline (an intermediary table to manage the many-to-many relationships within Java) - and users can interact with these tables via a command line. The java application uses a JDBC connection to create statements used for executing SQL commands, where the JDBC API is implemented through a JDBC driver.
 
 ## Getting Started
 
@@ -9,29 +9,20 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+In order to run this application, you will require a Java runtime environment, as well as a Java IDE (such as Eclipse). You will also need to have a version of Maven in order to build the project
 
-```
-Give examples
-```
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+Steps to follow to get the application running:
+1. fork this repository
+2. go to the main directory of the project
+3. open a command line in this directory
+4. enter 'mvn clean'
+5. enter 'mvn package'
+6. enter 'cd target'
+7. enter java -jar<name of jar file with dependences>.jar
 
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the tests
 
