@@ -11,7 +11,7 @@ import com.qa.ims.persistence.dao.Dao;
 import com.qa.ims.persistence.domain.Orderline;
 
 @RunWith(MockitoJUnitRunner.class)
-public class OrderlineServiceTest {
+public class OrderlineServicesTest {
 
 	@Mock
 	private Dao<Orderline> orderlineDao;

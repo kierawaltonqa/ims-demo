@@ -10,3 +10,7 @@ insert into ims_test.orders(customerID,totalPrice) values(1L,50.0);
 insert into ims_test.orders(customerID,totalPrice) values(3L,30.0);
 insert into ims_test.orders(customerID,totalPrice) values(2L,75.0);
 insert into ims_test.orders(customerID,totalPrice) values(4L,15.0);
+insert into ims_test.orderline(itemID,orderID,quantity) values(1L,1L,3);
+insert into ims_test.orderline(itemID,orderID,quantity) values(2L,1L,1);
+insert into ims_test.orderline(itemID,orderID,quantity) values(3L,2L,2);
+insert into ims_test.orderline(itemID,orderID,quantity) values(4L,2L,1);
