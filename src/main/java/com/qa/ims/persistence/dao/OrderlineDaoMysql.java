@@ -121,7 +121,7 @@ public class OrderlineDaoMysql implements Dao<Orderline> {
 	public void delete(long id) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("DELETE FROM orderline WHERE orderlineID = '" + id + ",;");
+			statement.executeUpdate("DELETE FROM orderline WHERE orderlineID = " + id + ";");
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());
