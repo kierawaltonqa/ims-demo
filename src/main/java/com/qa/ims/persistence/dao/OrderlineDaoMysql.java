@@ -121,12 +121,41 @@ public class OrderlineDaoMysql implements Dao<Orderline> {
 	public void delete(long id) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("DELETE FROM orderline WHERE orderlineID = " + id + ";");
+			statement.executeUpdate("delete from orderline where orderlineID =" + id);
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());
 		}
 
 	}
+
+//	public Long findOrderlineID(Orderline orderline) {
+//		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+//				Statement statement = connection.createStatement();) {
+//			ResultSet resultSet = statement.executeQuery(
+//					"select orderlineID from orderline where itemID = " + orderline.getItemID() + "and orderID ="
+//							+ orderline.getOrderID() + "and quantity = " + orderline.getQuantity() + ";");
+//			resultSet.next();
+//			return resultSet.getLong("orderlineID");
+//		} catch (Exception e) {
+//
+//			LOGGER.debug(e.getStackTrace());
+//			LOGGER.error(e.getMessage());
+//		}
+//		return null;
+//	}
+//
+//	@Override
+//	public void delete(Orderline orderline) {
+//		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+//				Statement statement = connection.createStatement();) {
+//			statement.executeUpdate("delete from orderline where orderlineID= " + findOrderlineID(orderline));
+//		} catch (Exception e) {
+//			LOGGER.debug(e.getStackTrace());
+//			LOGGER.error(e.getMessage());
+//		}
+//
+//	}
+//	
 
 }

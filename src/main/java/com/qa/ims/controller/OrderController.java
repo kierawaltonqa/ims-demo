@@ -41,7 +41,7 @@ public class OrderController implements CrudController<Order> {
 	}
 
 	/*
-	 * aiming to have create method which creates order and orderline entries
+	 * create method which creates the order and the orderline entries
 	 */
 	@Override
 	public Order create() {
@@ -79,6 +79,7 @@ public class OrderController implements CrudController<Order> {
 		Order order = orderService.update(new Order(orderID, customerID, totalPrice));
 		// LOGGER.info("order updated");
 		// THIS WORKS UP TO HERE - TRYING TO ADD MORE FUNCTIONALITY
+		// CURRENTLY CASE B REQUIRES KNOWLEDGE OF ORDERLINE ID
 		LOGGER.info("time to record the details of this updated order");
 		LOGGER.info("select A to add items and B to remove items from this order");
 		String updateChoice = getInput();
@@ -92,10 +93,17 @@ public class OrderController implements CrudController<Order> {
 			LOGGER.info("item added");
 			break;
 		case "B":
-			LOGGER.info("enter the orderlineID of the item you wish to remove from the order");
+			LOGGER.info("enter the orderlineID of the item you wish to remove");
 			Long itemID2 = Long.valueOf(getInput());
+			LOGGER.info("enter the quantity of the item you want to remove");
+			Integer quantity2 = Integer.parseInt(getInput());
 			orderlineService.delete(itemID2);
-			break;
+//			Orderline orderline2 = orderlineService.create(new Orderline(orderID,itemID2,quantity2));
+//			orderlineService.delete(orderline2);
+//			LOGGER.info("enter the orderlineID of the item you wish to remove from the order");
+//			Long itemID2 = Long.valueOf(getInput());
+//			orderlineService.delete(itemID2);
+//			break;
 		default:
 			LOGGER.info("order update details recorded");
 			break;
