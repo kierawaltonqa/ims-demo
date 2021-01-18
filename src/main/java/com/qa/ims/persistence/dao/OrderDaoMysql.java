@@ -36,28 +36,11 @@ public class OrderDaoMysql implements Dao<Order> {
 	Order orderFromResultSet(ResultSet resultSet) throws SQLException {
 		Long orderID = resultSet.getLong("orderID");
 		Long customerID = resultSet.getLong("customerID");
-		int totalPrice = resultSet.getInt("totalPrice");
-//		int quantity = resultSet.getInt("quantity");
-//		Long itemID = resultSet.getLong("itemID");
+		Double totalPrice = resultSet.getDouble("totalPrice");
+		// Integer quantity = resultSet.getInt("quantity");
+		// Long itemID = resultSet.getLong("itemID");
 		return new Order(orderID, customerID, totalPrice);
 	}
-
-//	public int totalPriceCalc(Order order) {
-//		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-//				Statement statement = connection.createStatement();
-//				ResultSet resultSet = statement
-//						.executeQuery("SELECT itemPrice FROM items WHERE itemID = '" + itemID + "';");) {
-//			for(Item item : items) {
-//				int itemPrice = resultSet.getInt("itemPrice");
-//				int totalPrice = itemPrice * 
-//			}
-//			return itemPrice;
-//		} catch (Exception e) {
-//			LOGGER.debug(e.getStackTrace());
-//			LOGGER.info(e.getStackTrace());
-//		}
-//		return null;
-//	}
 
 	@Override
 	public List<Order> readAll() {
@@ -97,6 +80,18 @@ public class OrderDaoMysql implements Dao<Order> {
 			statement1.executeUpdate("INSERT INTO orders(customerID, totalPrice) VALUES('" + order.getCustomerID()
 					+ "', '" + order.getTotalPrice() + "')");
 			return readLatest();
+		} catch (Exception e) {
+			LOGGER.debug(e.getStackTrace());
+			LOGGER.error(e.getStackTrace());
+		}
+		return null;
+	}
+
+	public Order addToOrderline(Order order) {
+		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+				Statement statement1 = connection.createStatement();) {
+			statement1.executeUpdate("INSERT INTO orderline(itemID,orderID,quantity) VALUES '" + order.getItemID()
+					+ "','" + order.getOrderID() + "','" + order.getQuantity() + "');");
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getStackTrace());

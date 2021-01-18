@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.qa.ims.persistence.domain.Order;
+import com.qa.ims.persistence.domain.Orderline;
 import com.qa.ims.services.CrudServices;
 import com.qa.ims.utils.Utils;
 
@@ -13,10 +14,17 @@ public class OrderController implements CrudController<Order> {
 	public static final Logger LOGGER = Logger.getLogger(OrderController.class);
 
 	private CrudServices<Order> orderService;
+	private CrudServices<Orderline> orderlineService;
 
 	public OrderController(CrudServices<Order> orderService) {
 		super();
 		this.orderService = orderService;
+	}
+
+	public OrderController(CrudServices<Order> orderService, CrudServices<Orderline> orderlineService) {
+		super();
+		this.orderService = orderService;
+		this.orderlineService = orderlineService;
 	}
 
 	String getInput() {
@@ -32,27 +40,28 @@ public class OrderController implements CrudController<Order> {
 		return orders;
 	}
 
+	/*
+	 * aiming to have create method which creates order and orderline entries
+	 */
 	@Override
 	public Order create() {
-//		List<Item> items = new ArrayList<>();
-//		int totalPrice = 0;
 		LOGGER.info("enter the customerID for the order you wish to create");
 		Long customerID = Long.valueOf(getInput());
-//		LOGGER.info("enter the ID of an item you wish to add to this order, enter quit otherwise");
-//		while (getInput() != "quit") {
-//			Long itemID = Long.valueOf(getInput());
-//			Item item = new Item(itemID);
-//			items.add(item);
-//			int itemPrice = item.getItemPrice();
-//			LOGGER.info("enter the quantity of this item you would like to add");
-//			int quantity = Integer.parseInt(getInput());
-//			totalPrice += quantity * itemPrice;
-//			LOGGER.info("enter another itemID to continue adding or quit to finish order");
-//		}
-		LOGGER.info("enter the total price of the order");
-		int totalPrice = Integer.parseInt(getInput());
-		LOGGER.info("order created");
+		LOGGER.info("enter the total price of your order");
+		Double totalPrice = Double.valueOf(getInput());
 		Order order = orderService.create(new Order(customerID, totalPrice));
+		LOGGER.info("order created, with orderID: " + order.getOrderID());
+
+		String answer = "yes";
+		while (answer == "yes") {
+			LOGGER.info("enter the itemID of the item you wish to add");
+			Long itemID = Long.valueOf(getInput());
+			LOGGER.info("enter the quantity of this item you would like to add");
+			Integer quantity = Integer.parseInt(getInput());
+			Orderline orderline = orderlineService.create(new Orderline(order.getOrderID(), itemID, quantity));
+			LOGGER.info("enter yes to add more items, enter no to finish order");
+			answer = getInput();
+		}
 		return order;
 	}
 
@@ -63,10 +72,6 @@ public class OrderController implements CrudController<Order> {
 		Long orderID = Long.valueOf(getInput());
 		LOGGER.info("enter the ID of the customer corresponding to this order");
 		Long customerID = Long.valueOf(getInput());
-//		LOGGER.info("enter the ID of an item you wish to add to the order");
-//		Long itemID = Long.valueOf(getInput());
-//		LOGGER.info("enter the quantity of this item you wish to add");
-//		int quantity = Integer.parseInt(getInput());
 		LOGGER.info("enter the total price of this order");
 		int totalPrice = Integer.parseInt(getInput());
 
