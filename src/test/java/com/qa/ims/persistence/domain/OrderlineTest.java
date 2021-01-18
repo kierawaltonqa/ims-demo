@@ -31,6 +31,7 @@ public class OrderlineTest {
 		assertNull(ol.getOrderID());
 		ol.setItemID(null);
 		assertNull(ol.getItemID());
+// NEED TO FIND WAY TO RESOLVE THIS
 //		ol.setQuantity(0);
 //		assertNull(ol.getQuantity());
 		ol.setOrderlineID(null);
