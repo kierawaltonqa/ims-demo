@@ -6,3 +6,7 @@ insert into ims_test.items(itemName,itemPrice) values("candle","5.0");
 insert into ims_test.items(itemName,itemPrice) values("plant","12.0");
 insert into ims_test.items(itemName,itemPrice) values("chair","30.0");
 insert into ims_test.items(itemName,itemPrice) values("table","50.0");
+insert into ims_test.orders(customerID,totalPrice) values(1L,50.0);
+insert into ims_test.orders(customerID,totalPrice) values(3L,30.0);
+insert into ims_test.orders(customerID,totalPrice) values(2L,75.0);
+insert into ims_test.orders(customerID,totalPrice) values(4L,15.0);
