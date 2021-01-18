@@ -92,7 +92,7 @@ public class OrderController implements CrudController<Order> {
 			LOGGER.info("item added");
 			break;
 		case "B":
-			LOGGER.info("enter the itemID of the item you wish to remove from the order");
+			LOGGER.info("enter the orderlineID of the item you wish to remove from the order");
 			Long itemID2 = Long.valueOf(getInput());
 			orderlineService.delete(itemID2);
 			break;
