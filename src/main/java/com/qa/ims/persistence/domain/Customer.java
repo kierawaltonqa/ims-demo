@@ -17,6 +17,11 @@ public class Customer {
 		this.surname = surname;
 	}
 
+	@Override
+	public String toString() {
+		return "id:" + id + " first name:" + firstName + " surname:" + surname;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -39,10 +44,6 @@ public class Customer {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
-	}
-
-	public String toString() {
-		return "id:" + id + " first name:" + firstName + " surname:" + surname;
 	}
 
 	@Override
