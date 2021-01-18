@@ -29,7 +29,7 @@ public class Orderline {
 
 	@Override
 	public String toString() {
-		return "orderlineID: " + orderlineID + " orderID: " + orderID + ", itemID: " + itemID + ", quantity: "
+		return "orderlineID: " + orderlineID + ", orderID: " + orderID + ", itemID: " + itemID + ", quantity: "
 				+ quantity;
 	}
 
