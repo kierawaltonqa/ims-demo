@@ -5,9 +5,6 @@ public class Order {
 	private Long orderID;
 	private Long customerID;
 	private Double totalPrice;
-//added these two attributes
-	private Long itemID;
-	private Integer quantity;
 
 	public Order(Long customerID, Double totalPrice) {
 		super();
@@ -22,17 +19,9 @@ public class Order {
 		this.totalPrice = totalPrice;
 	}
 
-	public Order(Long orderID, Long itemID, Integer quantity) {
-		super();
-		this.orderID = orderID;
-		this.itemID = itemID;
-		this.quantity = quantity;
-	}
-
 	@Override
 	public String toString() {
-		return "Order [orderID=" + orderID + ", customerID=" + customerID + ", totalPrice=" + totalPrice + ", itemID="
-				+ itemID + ", quantity=" + quantity + "]";
+		return "orderID=" + orderID + ", customerID=" + customerID + ", totalPrice=" + totalPrice;
 	}
 
 	public Long getOrderID() {
@@ -59,30 +48,12 @@ public class Order {
 		this.totalPrice = totalPrice;
 	}
 
-	public Long getItemID() {
-		return itemID;
-	}
-
-	public void setItemID(Long itemID) {
-		this.itemID = itemID;
-	}
-
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((customerID == null) ? 0 : customerID.hashCode());
-		result = prime * result + ((itemID == null) ? 0 : itemID.hashCode());
 		result = prime * result + ((orderID == null) ? 0 : orderID.hashCode());
-		result = prime * result + ((quantity == null) ? 0 : quantity.hashCode());
 		result = prime * result + ((totalPrice == null) ? 0 : totalPrice.hashCode());
 		return result;
 	}
@@ -101,20 +72,10 @@ public class Order {
 				return false;
 		} else if (!customerID.equals(other.customerID))
 			return false;
-		if (itemID == null) {
-			if (other.itemID != null)
-				return false;
-		} else if (!itemID.equals(other.itemID))
-			return false;
 		if (orderID == null) {
 			if (other.orderID != null)
 				return false;
 		} else if (!orderID.equals(other.orderID))
-			return false;
-		if (quantity == null) {
-			if (other.quantity != null)
-				return false;
-		} else if (!quantity.equals(other.quantity))
 			return false;
 		if (totalPrice == null) {
 			if (other.totalPrice != null)

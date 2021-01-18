@@ -106,8 +106,9 @@ public class OrderlineDaoMysql implements Dao<Orderline> {
 	public Orderline update(Orderline orderline) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("UPDATE orderline SET itemID = '" + orderline.getItemID() + "', quantity = '"
-					+ orderline.getQuantity() + "' WHERE orderlineID = '" + orderline.getOrderlineID() + "');");
+			statement.executeUpdate("UPDATE orderline SET itemID = '" + orderline.getItemID() + "', orderID = '"
+					+ orderline.getOrderID() + "', quantity = '" + orderline.getQuantity() + "' WHERE orderlineID = '"
+					+ orderline.getOrderlineID() + "');");
 			return readOrderline(orderline.getOrderID());
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());

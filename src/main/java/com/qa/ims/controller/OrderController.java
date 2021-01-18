@@ -53,7 +53,7 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("order created, with orderID: " + order.getOrderID());
 
 		String answer = "yes";
-		while (answer == "yes") {
+		while (answer.equalsIgnoreCase("yes")) {
 			LOGGER.info("enter the itemID of the item you wish to add");
 			Long itemID = Long.valueOf(getInput());
 			LOGGER.info("enter the quantity of this item you would like to add");
@@ -62,6 +62,7 @@ public class OrderController implements CrudController<Order> {
 			LOGGER.info("enter yes to add more items, enter no to finish order");
 			answer = getInput();
 		}
+		LOGGER.info("order created");
 		return order;
 	}
 
@@ -73,9 +74,23 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("enter the ID of the customer corresponding to this order");
 		Long customerID = Long.valueOf(getInput());
 		LOGGER.info("enter the total price of this order");
-		int totalPrice = Integer.parseInt(getInput());
+		Double totalPrice = Double.valueOf(getInput());
+		Order order = orderService.update(new Order(orderID, customerID, totalPrice));
+		LOGGER.info("order updated");
 
-		Order order = orderService.create(new Order(orderID, customerID, totalPrice));
+//		String answer = "yes";
+//		while (answer.equalsIgnoreCase("yes")) {
+//			LOGGER.info("enter the orderlineID corresponding to the item you want to update in this order");
+//			Long orderlineID = Long.valueOf(getInput());
+//			LOGGER.info("enter the itemID of the item you wish to add to this updated order");
+//			Long itemID = Long.valueOf(getInput());
+//			LOGGER.info("enter the quantity of this item you would like to add");
+//			Integer quantity = Integer.parseInt(getInput());
+//			Orderline orderline = orderlineService
+//					.update(new Orderline(order.getOrderID(), itemID, quantity, orderlineID));
+//			LOGGER.info("enter yes to add more items, enter no to finish order");
+//			answer = getInput();
+//		}
 		LOGGER.info("order updated");
 		return order;
 

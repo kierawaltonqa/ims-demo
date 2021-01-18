@@ -87,25 +87,13 @@ public class OrderDaoMysql implements Dao<Order> {
 		return null;
 	}
 
-	public Order addToOrderline(Order order) {
-		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement1 = connection.createStatement();) {
-			statement1.executeUpdate("INSERT INTO orderline(itemID,orderID,quantity) VALUES '" + order.getItemID()
-					+ "','" + order.getOrderID() + "','" + order.getQuantity() + "');");
-		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getStackTrace());
-		}
-		return null;
-	}
-
 	public Order readOrder(Long orderID) {
 
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();) {
-			ResultSet resultSet = statement.executeQuery("SELECT FROM orders WHERE orderID='" + orderID + "';");
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("SELECT FROM orders WHERE orderID='" + orderID);) {
+			resultSet.next();
 			return orderFromResultSet(resultSet);
-
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getStackTrace());
@@ -117,9 +105,9 @@ public class OrderDaoMysql implements Dao<Order> {
 	@Override
 	public Order update(Order order) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement1 = connection.createStatement();) {
-			statement1.executeUpdate("UPDATE orders SET customerID = '" + order.getCustomerID() + "', totalPrice = '"
-					+ order.getTotalPrice() + ", WHERE orderID ='" + order.getOrderID() + "';");
+				Statement statement = connection.createStatement();) {
+			statement.executeUpdate("update orders set customerID = '" + order.getCustomerID() + "', totalPrice = '"
+					+ order.getTotalPrice() + ", where orderID ='" + order.getOrderID() + "';");
 			return readOrder(order.getOrderID());
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
