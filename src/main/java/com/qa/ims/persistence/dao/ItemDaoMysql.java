@@ -91,8 +91,9 @@ public class ItemDaoMysql implements Dao<Item> {
 
 	public Item readItem(Long itemID) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();) {
-			ResultSet resultSet = statement.executeQuery("SELECT FROM items WHERE itemID = '" + itemID + "';");
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("SELECT FROM items WHERE itemID = '" + itemID + "';");) {
+			resultSet.next();
 			return itemFromResultSet(resultSet);
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
@@ -116,10 +117,10 @@ public class ItemDaoMysql implements Dao<Item> {
 	}
 
 	@Override
-	public void delete(long itemID) {
+	public void delete(long id) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("DELETE FROM items WHERE itemID = '" + itemID + "';");
+			statement.executeUpdate("DELETE FROM items WHERE itemID = '" + id + "';");
 			System.out.println("item deleted");
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
