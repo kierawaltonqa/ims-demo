@@ -37,8 +37,6 @@ public class OrderDaoMysql implements Dao<Order> {
 		Long orderID = resultSet.getLong("orderID");
 		Long customerID = resultSet.getLong("customerID");
 		Double totalPrice = resultSet.getDouble("totalPrice");
-		// Integer quantity = resultSet.getInt("quantity");
-		// Long itemID = resultSet.getLong("itemID");
 		return new Order(orderID, customerID, totalPrice);
 	}
 
@@ -91,7 +89,7 @@ public class OrderDaoMysql implements Dao<Order> {
 
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT FROM orders WHERE orderID='" + orderID);) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders WHERE orderID=" + orderID);) {
 			resultSet.next();
 			return orderFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -106,8 +104,8 @@ public class OrderDaoMysql implements Dao<Order> {
 	public Order update(Order order) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("update orders set customerID = '" + order.getCustomerID() + "', totalPrice = '"
-					+ order.getTotalPrice() + ", where orderID ='" + order.getOrderID() + "';");
+			statement.executeUpdate("update orders set customerID = " + order.getCustomerID() + ", totalPrice = "
+					+ order.getTotalPrice() + " where orderID =" + order.getOrderID());
 			return readOrder(order.getOrderID());
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());

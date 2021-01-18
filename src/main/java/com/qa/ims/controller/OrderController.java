@@ -71,6 +71,7 @@ public class OrderController implements CrudController<Order> {
 
 		LOGGER.info("enter the ID of the order you wish to update");
 		Long orderID = Long.valueOf(getInput());
+		LOGGER.info("now you need to enter the updated details of this order");
 		LOGGER.info("enter the ID of the customer corresponding to this order");
 		Long customerID = Long.valueOf(getInput());
 		LOGGER.info("enter the total price of this order");
@@ -90,10 +91,9 @@ public class OrderController implements CrudController<Order> {
 //					.update(new Orderline(order.getOrderID(), itemID, quantity, orderlineID));
 //			LOGGER.info("enter yes to add more items, enter no to finish order");
 //			answer = getInput();
-//		}
-		LOGGER.info("order updated");
+//		
+//		LOGGER.info("order updated");
 		return order;
-
 	}
 
 	@Override
