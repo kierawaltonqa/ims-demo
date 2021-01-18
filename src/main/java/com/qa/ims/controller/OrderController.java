@@ -78,7 +78,7 @@ public class OrderController implements CrudController<Order> {
 		Double totalPrice = Double.valueOf(getInput());
 		Order order = orderService.update(new Order(orderID, customerID, totalPrice));
 		LOGGER.info("order updated");
-		// THIS WORKS UP TO HERE - TRYING TO ADD MORE FUNCTIONALITY
+
 		// CURRENTLY CASE B REQUIRES KNOWLEDGE OF ORDERLINE ID
 		String answer = "yes";
 		while (answer.equalsIgnoreCase("yes")) {
@@ -96,7 +96,8 @@ public class OrderController implements CrudController<Order> {
 				break;
 			case "B":
 				LOGGER.info("enter the orderlineID of the item you wish to remove");
-				LOGGER.info("if you don't know this, return to main menu, select orderline, then select read");
+				LOGGER.info(
+						"if you don't know this, select read under the orderline entity to view all orderline entry details");
 				Long itemID2 = Long.valueOf(getInput());
 				orderlineService.delete(itemID2);
 			default:
