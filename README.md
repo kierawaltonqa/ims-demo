@@ -9,7 +9,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-In order to run this application, you will require a Java runtime environment, as well as a Java IDE (such as Eclipse). You will also need to have a version of Maven in order to build the project
+In order to run this application, you will require a Java runtime environment, as well as a Java IDE (such as Eclipse). You will also need to have a version of Maven in order to build the project.
 
 
 ### Installing
@@ -26,11 +26,11 @@ Steps to follow to get the application running:
 
 ## Running the tests
 
-Explain how to run the automated tests for this system. Break down into which tests and what they do
+To run the tests for this application, JUnit is used. Simply open the source code in your IDE and run the tests as a JUnit application.
 
 ### Unit Tests 
 
-Explain what these tests test, why and how to run them
+Unit tests are used to test this application. Unit testing is a method by which individual units of source code are tested; this is done to validate whether each unit of code performs as expected and hence determine whether each unit can successfully be used.
 
 ```
 Give an example
@@ -58,6 +58,12 @@ Add additional notes about how to deploy this on a live system
 ## Built With
 
 * [Maven](https://maven.apache.org/) - Dependency Management
+* [Eclipse](https://www.eclipse.org/downloads/) - IDE
+* [MySQL](https://www.mysql.com/) - Database Language
+* [GCP](https://cloud.google.com/) - Database Host
+* [JUnit](https://junit.org/junit5/) - Testing
+* [Mockito](https://site.mockito.org/) - Testing
+* [Jira](https://jira.atlassian.com/) - Project Management
 
 ## Versioning
 
