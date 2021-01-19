@@ -37,7 +37,6 @@ public class OrderController implements CrudController<Order> {
 		for (Order order : orders) {
 			LOGGER.info(order.toString());
 		}
-		LOGGER.info("to view the details of these orders, go to orderline and select read");
 		return orders;
 	}
 
@@ -84,7 +83,7 @@ public class OrderController implements CrudController<Order> {
 		String answer = "yes";
 		while (answer.equalsIgnoreCase("yes")) {
 			LOGGER.info(
-					"select A to add items, B to remove items, or C to change the quantity of an item from this order");
+					"select A to add items, B to remove an items, or C to change the quantity of an item from this order");
 			String updateChoice = getInput();
 			switch (updateChoice) {
 			case "A":
@@ -113,7 +112,8 @@ public class OrderController implements CrudController<Order> {
 				List<Orderline> availableOrderlines2 = orderlineService.readAll();
 				for (Orderline ol : availableOrderlines2) {
 					if (ol.getOrderID().equals(orderID)) {
-						LOGGER.info("available orderlineID: " + ol.getOrderlineID() + ", itemID: " + ol.getItemID());
+						LOGGER.info("available orderlineID: " + ol.getOrderlineID() + ", corresponding itemID: "
+								+ ol.getItemID());
 					}
 				}
 				LOGGER.info("enter the orderlineID from the list above of the item you wish to update");
