@@ -15,18 +15,19 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.services.OrderServices;
+import com.qa.ims.services.OrderlineServices;
 
 @RunWith(MockitoJUnitRunner.class)
 public class OrderControllerTest {
 
 	@Mock
 	private OrderServices orderServices;
-	// private OrderlineServices orderlineServices;
+	private OrderlineServices orderlineServices;
 
 	@Spy
 	@InjectMocks
 	private OrderController orderController;
-	// private OrderlineController orderlineController;
+	private OrderlineController orderlineController;
 
 	@Test
 	public void readAllTest() {
@@ -69,4 +70,5 @@ public class OrderControllerTest {
 		Mockito.when(orderServices.update(order)).thenReturn(order);
 		assertEquals(order, orderController.update());
 	}
+
 }
