@@ -20,7 +20,7 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "id:" + id + " first name:" + firstName + " surname:" + surname;
+		return "id:" + id + ", first name:" + firstName + ", surname:" + surname;
 	}
 
 	public Long getId() {
