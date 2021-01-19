@@ -19,7 +19,7 @@ import com.qa.ims.persistence.domain.Orderline;
 
 public class OrderlineDaoMysqlTest {
 
-	public static final Logger LOGGER = Logger.getLogger(OrderDaoMysql.class);
+	public static final Logger LOGGER = Logger.getLogger(OrderlineDaoMysql.class);
 
 	private static String jdbcConnectionUrl = "jdbc:mysql://localhost:3306/ims_test";
 	private static String username = "root";
