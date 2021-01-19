@@ -3,23 +3,23 @@ package com.qa.ims.persistence.domain;
 public class Orderline {
 	private Long orderID;
 	private Long itemID;
-	private int quantity;
+	private Integer quantity;
 	private Long orderlineID;
 
-	public Orderline(Long orderID, Long itemID, int quantity) {
+	public Orderline(Long orderID, Long itemID, Integer quantity) {
 		super();
 		this.orderID = orderID;
 		this.itemID = itemID;
 		this.quantity = quantity;
 	}
 
-	public Orderline(Long itemID, int quantity) {
+	public Orderline(Long itemID, Integer quantity) {
 		super();
 		this.itemID = itemID;
 		this.quantity = quantity;
 	}
 
-	public Orderline(Long orderID, Long itemID, int quantity, Long orderlineID) {
+	public Orderline(Long orderID, Long itemID, Integer quantity, Long orderlineID) {
 		super();
 		this.orderID = orderID;
 		this.itemID = itemID;
@@ -29,7 +29,7 @@ public class Orderline {
 
 	@Override
 	public String toString() {
-		return "orderlineID: " + orderlineID + " orderID: " + orderID + ", itemID: " + itemID + ", quantity: "
+		return "orderlineID: " + orderlineID + ", orderID: " + orderID + ", itemID: " + itemID + ", quantity: "
 				+ quantity;
 	}
 
@@ -49,11 +49,11 @@ public class Orderline {
 		this.itemID = itemID;
 	}
 
-	public int getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 
@@ -72,7 +72,7 @@ public class Orderline {
 		result = prime * result + ((itemID == null) ? 0 : itemID.hashCode());
 		result = prime * result + ((orderID == null) ? 0 : orderID.hashCode());
 		result = prime * result + ((orderlineID == null) ? 0 : orderlineID.hashCode());
-		result = prime * result + quantity;
+		result = prime * result + ((quantity == null) ? 0 : quantity.hashCode());
 		return result;
 	}
 
@@ -100,7 +100,10 @@ public class Orderline {
 				return false;
 		} else if (!orderlineID.equals(other.orderlineID))
 			return false;
-		if (quantity != other.quantity)
+		if (quantity == null) {
+			if (other.quantity != null)
+				return false;
+		} else if (!quantity.equals(other.quantity))
 			return false;
 		return true;
 	}

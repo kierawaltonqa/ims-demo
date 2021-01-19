@@ -36,7 +36,7 @@ public class CustomerDaoMysqlTest {
 		// cleans out database every time
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("delete from customers;");
+			statement.executeUpdate("delete * from customers;");
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getStackTrace());

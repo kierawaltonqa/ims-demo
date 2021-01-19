@@ -31,6 +31,10 @@ public class OrderController implements CrudController<Order> {
 		return Utils.getInput();
 	}
 
+	Double getDoubleInput() {
+		return Utils.getDoubleInput();
+	}
+
 	@Override
 	public List<Order> readAll() {
 		List<Order> orders = orderService.readAll();
@@ -49,7 +53,7 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("enter the customerID for the order you wish to create");
 		Long customerID = Long.valueOf(getInput());
 		LOGGER.info("enter the total price of your order");
-		Double totalPrice = Double.valueOf(getInput());
+		Double totalPrice = getDoubleInput();
 		Order order = orderService.create(new Order(customerID, totalPrice));
 		LOGGER.info("order created, with orderID: " + order.getOrderID());
 
