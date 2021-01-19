@@ -90,7 +90,7 @@ public class OrderlineDaoMysql implements Dao<Orderline> {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement
-						.executeQuery("SELECT FROM orderline WHERE orderlineID='" + orderlineID + "';");) {
+						.executeQuery("SELECT * FROM orderline WHERE orderlineID='" + orderlineID + "';");) {
 			resultSet.next();
 			return orderlineFromResultSet(resultSet);
 		} catch (Exception e) {

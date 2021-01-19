@@ -21,10 +21,12 @@ public class OrderControllerTest {
 
 	@Mock
 	private OrderServices orderServices;
+	// private OrderlineServices orderlineServices;
 
 	@Spy
 	@InjectMocks
 	private OrderController orderController;
+	// private OrderlineController orderlineController;
 
 	@Test
 	public void readAllTest() {
@@ -49,8 +51,8 @@ public class OrderControllerTest {
 	@Test
 	public void createTest() {
 		String customerID = "1";
-		String totalPrice = "50.0";
-		Mockito.doReturn(customerID, totalPrice).when(orderController).getInput();
+		Double totalPrice = 50.0;
+		Mockito.doReturn(customerID, totalPrice.toString()).when(orderController).getInput();
 		Order order = new Order(1L, 50.0);
 		Order savedOrder = new Order(1L, 1L, 50.0);
 		Mockito.when(orderServices.create(order)).thenReturn(savedOrder);

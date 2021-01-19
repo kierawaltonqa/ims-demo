@@ -37,6 +37,7 @@ public class OrderController implements CrudController<Order> {
 		for (Order order : orders) {
 			LOGGER.info(order.toString());
 		}
+		LOGGER.info("to view the details of these orders, go to orderline and select read");
 		return orders;
 	}
 
