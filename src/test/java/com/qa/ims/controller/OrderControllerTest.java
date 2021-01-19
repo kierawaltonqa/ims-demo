@@ -15,18 +15,19 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.services.OrderServices;
+import com.qa.ims.services.OrderlineServices;
 
 @RunWith(MockitoJUnitRunner.class)
 public class OrderControllerTest {
 
 	@Mock
 	private OrderServices orderServices;
-	// private OrderlineServices orderlineServices;
+	private OrderlineServices orderlineServices;
 
 	@Spy
 	@InjectMocks
 	private OrderController orderController;
-	// private OrderlineController orderlineController;
+	private OrderlineController orderlineController;
 
 	@Test
 	public void readAllTest() {
@@ -52,7 +53,8 @@ public class OrderControllerTest {
 	public void createTest() {
 		String customerID = "1";
 		Double totalPrice = 50.0;
-		Mockito.doReturn(customerID, totalPrice.toString()).when(orderController).getInput();
+		Mockito.doReturn(customerID).when(orderController).getInput();
+		Mockito.doReturn(totalPrice).when(orderController).getDoubleInput();
 		Order order = new Order(1L, 50.0);
 		Order savedOrder = new Order(1L, 1L, 50.0);
 		Mockito.when(orderServices.create(order)).thenReturn(savedOrder);
