@@ -31,14 +31,22 @@ public class OrderController implements CrudController<Order> {
 		return Utils.getInput();
 	}
 
-//TRY TO FIND WAY TO PRINT OUT ORDERLINE DETAILS TOO??
 	@Override
 	public List<Order> readAll() {
 		List<Order> orders = orderService.readAll();
+		List<Orderline> orderlines = orderlineService.readAll();
 		for (Order order : orders) {
 			LOGGER.info(order.toString());
 		}
-		LOGGER.info("note: orderline details can only be read when required (i.e. when updating an order)");
+
+		LOGGER.info("to view the details of these orders shown in the orderline, select yes, select no to quit");
+		String answer = getInput();
+		if (answer.equalsIgnoreCase("yes")) {
+			for (Orderline orderline : orderlines) {
+				LOGGER.info(orderline.toString());
+			}
+		}
+		LOGGER.info("read complete");
 		return orders;
 	}
 
@@ -105,6 +113,7 @@ public class OrderController implements CrudController<Order> {
 					}
 				}
 				LOGGER.info("select the orderlineID from the list above of the item you wish to remove");
+				LOGGER.info("note: this removes all quantities of the item - to simply edit the quantity, select C");
 				Long orderlineID = Long.valueOf(getInput());
 				orderlineService.delete(orderlineID);
 				LOGGER.info("item removed");
