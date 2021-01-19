@@ -38,6 +38,7 @@ public class OrderController implements CrudController<Order> {
 		for (Order order : orders) {
 			LOGGER.info(order.toString());
 		}
+		LOGGER.info("note: orderline details can only be read when required (i.e. when updating an order)");
 		return orders;
 	}
 
