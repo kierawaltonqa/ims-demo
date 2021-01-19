@@ -52,11 +52,12 @@ public class OrderlineControllerTest {
 
 	@Test
 	public void updateTest() {
-		String orderlineID = "1";
-		String orderID = "1";
-		String itemID = "1";
-		Integer quantity = 3;
-		Mockito.doReturn(orderID, itemID, quantity.toString(), orderlineID).when(orderlineController).getInput();
+		Long orderlineID = 1L;
+		Long orderID = 1L;
+		Long itemID = 1L;
+		String quantity = "3";
+		Mockito.doReturn(orderID, itemID, orderlineID).when(orderlineController).getLongInput();
+		Mockito.doReturn(quantity).when(orderlineController).getInput();
 		Orderline ol = new Orderline(1L, 1L, 3, 1L);
 		Mockito.when(orderlineServices.update(ol)).thenReturn(ol);
 		assertEquals(ol, orderlineController.update());

@@ -23,6 +23,10 @@ public class OrderlineController implements CrudController<Orderline> {
 		return Utils.getInput();
 	}
 
+	Long getLongInput() {
+		return Utils.getLongInput();
+	}
+
 	@Override
 	public List<Orderline> readAll() {
 		List<Orderline> orderlines = orderlineService.readAll();
@@ -48,11 +52,11 @@ public class OrderlineController implements CrudController<Orderline> {
 	@Override
 	public Orderline update() {
 		LOGGER.info("please enter the orderlineID of the order you wish to update");
-		Long orderlineID = Long.valueOf(getInput());
+		Long orderlineID = getLongInput();
 		LOGGER.info("please enter the orderID of the order");
-		Long orderID = Long.valueOf(getInput());
+		Long orderID = getLongInput();
 		LOGGER.info("please enter the ID of the item you wish to add");
-		Long itemID = Long.valueOf(getInput());
+		Long itemID = getLongInput();
 		LOGGER.info("please enter the quantity of this item you want to add");
 		Integer quantity = Integer.parseInt(getInput());
 		Orderline orderline = orderlineService.update(new Orderline(orderID, itemID, quantity, orderlineID));
