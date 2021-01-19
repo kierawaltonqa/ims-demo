@@ -48,7 +48,6 @@ public class OrderControllerTest {
 		Mockito.verify(orderServices, Mockito.times(1)).delete(1L);
 	}
 
-// NUMBER FORMAT EXCEPTION ERROR
 	@Test
 	public void createTest() {
 		String customerID = "1";
