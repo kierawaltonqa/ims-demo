@@ -83,7 +83,7 @@ public class OrderController implements CrudController<Order> {
 		String answer = "yes";
 		while (answer.equalsIgnoreCase("yes")) {
 			LOGGER.info(
-					"select A to add items, B to remove an items, or C to change the quantity of an item from this order");
+					"select A to add items, B to remove items, or C to change the quantity of an item from this order");
 			String updateChoice = getInput();
 			switch (updateChoice) {
 			case "A":
@@ -125,6 +125,7 @@ public class OrderController implements CrudController<Order> {
 				Orderline ol = orderlineService.update(new Orderline(orderID, itemID2, quantity2, orderlineID2));
 				LOGGER.info("quantity changed");
 				break;
+
 			default:
 				LOGGER.info("not a valid option");
 				break;
