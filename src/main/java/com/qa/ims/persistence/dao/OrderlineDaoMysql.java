@@ -36,7 +36,7 @@ public class OrderlineDaoMysql implements Dao<Orderline> {
 	Orderline orderlineFromResultSet(ResultSet resultSet) throws SQLException {
 		Long orderID = resultSet.getLong("orderID");
 		Long itemID = resultSet.getLong("itemID");
-		int quantity = resultSet.getInt("quantity");
+		Integer quantity = resultSet.getInt("quantity");
 		Long orderlineID = resultSet.getLong("orderlineID");
 		return new Orderline(orderID, itemID, quantity, orderlineID);
 	}

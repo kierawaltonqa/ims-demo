@@ -39,7 +39,7 @@ public class OrderlineController implements CrudController<Orderline> {
 		LOGGER.info("please enter the itemID");
 		Long itemID = Long.valueOf(getInput());
 		LOGGER.info("please enter the quantity of the item in the order");
-		int quantity = Integer.parseInt(getInput());
+		Integer quantity = Integer.parseInt(getInput());
 		Orderline orderline = orderlineService.create(new Orderline(orderID, itemID, quantity));
 		LOGGER.info("orderline record created");
 		return orderline;
@@ -54,7 +54,7 @@ public class OrderlineController implements CrudController<Orderline> {
 		LOGGER.info("please enter the ID of the item you wish to add");
 		Long itemID = Long.valueOf(getInput());
 		LOGGER.info("please enter the quantity of this item you want to add");
-		int quantity = Integer.parseInt(getInput());
+		Integer quantity = Integer.parseInt(getInput());
 		Orderline orderline = orderlineService.create(new Orderline(orderID, itemID, quantity, orderlineID));
 		LOGGER.info("orderline record updated");
 		return orderline;
