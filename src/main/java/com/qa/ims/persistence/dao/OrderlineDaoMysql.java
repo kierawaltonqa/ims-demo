@@ -90,8 +90,8 @@ public class OrderlineDaoMysql implements Dao<Orderline> {
 
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			ResultSet resultSet = statement
-					.executeQuery("SELECT FROM orderline WHERE orderlineID='" + orderlineID + "';");
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM orderline WHERE orderlineID=" + orderlineID);
+			resultSet.next();
 			return orderlineFromResultSet(resultSet);
 
 		} catch (Exception e) {
@@ -106,10 +106,10 @@ public class OrderlineDaoMysql implements Dao<Orderline> {
 	public Orderline update(Orderline orderline) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("UPDATE orderline SET itemID = '" + orderline.getItemID() + "', orderID = '"
-					+ orderline.getOrderID() + "', quantity = '" + orderline.getQuantity() + "' WHERE orderlineID = '"
-					+ orderline.getOrderlineID() + "');");
-			return readOrderline(orderline.getOrderID());
+			statement.executeUpdate("update orderline set orderID = " + orderline.getOrderID() + ", itemID = "
+					+ orderline.getItemID() + ", quantity = " + orderline.getQuantity() + " WHERE orderlineID = "
+					+ orderline.getOrderlineID());
+			return readOrderline(orderline.getOrderlineID());
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());

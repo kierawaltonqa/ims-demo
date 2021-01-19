@@ -79,12 +79,12 @@ public class OrderController implements CrudController<Order> {
 		Double totalPrice = Double.valueOf(getInput());
 		Order order = orderService.update(new Order(orderID, customerID, totalPrice));
 		LOGGER.info("order updated");
+		LOGGER.info("time to record the details of this updated order");
 
-		// CURRENTLY CASE B REQUIRES KNOWLEDGE OF ORDERLINE ID
 		String answer = "yes";
 		while (answer.equalsIgnoreCase("yes")) {
-			LOGGER.info("time to record the details of this updated order");
-			LOGGER.info("select A to add items and B to remove items from this order");
+			LOGGER.info(
+					"select A to add items, B to remove items, or C to change the quantity of an item from this order");
 			String updateChoice = getInput();
 			switch (updateChoice) {
 			case "A":
@@ -95,17 +95,41 @@ public class OrderController implements CrudController<Order> {
 				Orderline orderline = orderlineService.create(new Orderline(orderID, itemID, quantity));
 				LOGGER.info("item added");
 				break;
+
 			case "B":
-				LOGGER.info("enter the orderlineID of the item you wish to remove");
-				LOGGER.info(
-						"if you don't know this, select read under the orderline entity to view all orderline entry details");
+				List<Orderline> availableOrderlines = orderlineService.readAll();
+				for (Orderline ol : availableOrderlines) {
+					if (ol.getOrderID().equals(orderID)) {
+						LOGGER.info("available orderlineID: " + ol.getOrderlineID());
+					}
+				}
+				LOGGER.info("select the orderlineID from the list above of the item you wish to remove");
+				Long orderlineID = Long.valueOf(getInput());
+				orderlineService.delete(orderlineID);
+				LOGGER.info("item removed");
+				break;
+
+			case "C":
+				List<Orderline> availableOrderlines2 = orderlineService.readAll();
+				for (Orderline ol : availableOrderlines2) {
+					if (ol.getOrderID().equals(orderID)) {
+						LOGGER.info("available orderlineID: " + ol.getOrderlineID() + ", itemID: " + ol.getItemID());
+					}
+				}
+				LOGGER.info("enter the orderlineID from the list above of the item you wish to update");
+				Long orderlineID2 = Long.valueOf(getInput());
+				LOGGER.info("enter the itemID corresponding to this orderline entry");
 				Long itemID2 = Long.valueOf(getInput());
-				orderlineService.delete(itemID2);
+				LOGGER.info("enter the new quantity of this item");
+				Integer quantity2 = Integer.parseInt(getInput());
+				Orderline ol = orderlineService.update(new Orderline(orderID, itemID2, quantity2, orderlineID2));
+				LOGGER.info("quantity changed");
+				break;
 			default:
-				LOGGER.info("order update details recorded");
+				LOGGER.info("not a valid option");
 				break;
 			}
-			LOGGER.info("enter yes to update or remove another item, enter no to quit");
+			LOGGER.info("enter yes to add, update or remove another item, enter no to quit");
 			answer = getInput();
 		}
 		LOGGER.info("update details recorded");
