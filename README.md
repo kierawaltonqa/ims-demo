@@ -21,7 +21,7 @@ Steps to follow to get the application running:
 4. enter 'mvn clean'
 5. enter 'mvn package'
 6. enter 'cd target'
-7. enter java -jar<name of jar file with dependences>.jar
+7. enter java -jar , name of jar file with dependences, .jar
 
 
 ## Running the tests
