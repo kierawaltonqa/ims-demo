@@ -87,19 +87,17 @@ public class OrderlineDaoMysql implements Dao<Orderline> {
 	}
 
 	public Orderline readOrderline(Long orderlineID) {
-
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();) {
-			ResultSet resultSet = statement
-					.executeQuery("SELECT FROM orderline WHERE orderlineID='" + orderlineID + "';");
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement
+						.executeQuery("SELECT FROM orderline WHERE orderlineID='" + orderlineID + "';");) {
+			resultSet.next();
 			return orderlineFromResultSet(resultSet);
-
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getStackTrace());
 		}
 		return null;
-
 	}
 
 	@Override
