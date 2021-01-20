@@ -115,10 +115,11 @@ public class OrderDaoMysql implements Dao<Order> {
 	}
 
 	@Override
-	public void delete(long id) {
+	public void delete(long orderID) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("DELETE FROM orders WHERE orderID = '" + id + "';");
+			statement.executeUpdate("delete from orderline where orderID =" + orderID
+					+ "; delete from orders where orderID =" + orderID + ";");
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.debug(e.getStackTrace());
