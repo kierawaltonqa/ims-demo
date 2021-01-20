@@ -1,5 +1,5 @@
-Coverage: 34%
-# Project Title
+Coverage: 62%
+# Inventory Management System
 
 This project is an application, developed and implemented through java, which allows users to create, read, update and delete from tables in an SQL database. The database has 4 tables - customers, items, orders and orderline (an intermediary table to manage the many-to-many relationships within Java) - and users can interact with these tables via a command line. The java application uses a JDBC connection to create statements used for executing SQL commands, where the JDBC API is implemented through a JDBC driver.
 
@@ -32,28 +32,9 @@ To run the tests for this application, JUnit is used. Simply open the source cod
 
 Unit tests are used to test this application. Unit testing is a method by which individual units of source code are tested; this is done to validate whether each unit of code performs as expected and hence determine whether each unit can successfully be used.
 
-```
-Give an example
-```
-
-### Integration Tests 
-Explain what these tests test, why and how to run them
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+Deployment of this project has been managed through the use of a CI pipeline. Source code is written on Java, pushed to a VCS (GitHub) and tracked using a Jira Kanban Board. Maven is used as a build tool for this process, and JUnit is used for automated testing.
 
 ## Built With
 
@@ -67,11 +48,12 @@ Add additional notes about how to deploy this on a live system
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning.
+* [Git](https://git-scm.com/) - Version Control System (VCS)
+* [Github](https://github.com/) - VCS Host
 
 ## Authors
 
-* **Chris Perrins** - *Initial work* - [christophperrins](https://github.com/christophperrins)
+* **Kiera Walton** - *Author* - [kierawaltonqa](https://github.com/kierawaltonqa)
 
 ## License
 
@@ -81,6 +63,8 @@ This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* **Chris Perrins** - *provided a base for the project* - [christophperrins](https://github.com/christophperrins) (base can be found here)
+* **Nicholas Johnson** - *software trainer*
+* **Aswene Sivaraj** - *Java trainer* 
+* **Vinesh Ghela** - *Java trainer*
+
