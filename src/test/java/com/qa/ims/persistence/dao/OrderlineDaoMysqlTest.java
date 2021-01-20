@@ -36,7 +36,7 @@ public class OrderlineDaoMysqlTest {
 		// cleans out database every time
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("delete from orderline;");
+			statement.executeUpdate("delete from ims_test.orderline");
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getStackTrace());

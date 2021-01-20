@@ -49,8 +49,8 @@ public class CustomerDaoMysqlTest {
 		CustomerDaoMysql customerDaoMysql = new CustomerDaoMysql(jdbcConnectionUrl, username, password);
 		String fn = "jim";
 		String ln = "bob";
-		Customer customer = new Customer(2L, fn, ln);
-		Customer savedCustomer = new Customer(2L, fn, ln);
+		Customer customer = new Customer(fn, ln);
+		Customer savedCustomer = new Customer(1L, fn, ln);
 		customer = customerDaoMysql.create(customer);
 		assertEquals(savedCustomer, customer);
 	}
