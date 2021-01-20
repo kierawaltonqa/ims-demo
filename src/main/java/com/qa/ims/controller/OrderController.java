@@ -34,6 +34,10 @@ public class OrderController implements CrudController<Order> {
 	Double getDoubleInput() {
 		return Utils.getDoubleInput();
 	}
+	/*
+	 * read method shows all orders in the system and offers the option to view all
+	 * the orderline entries in the system too
+	 */
 
 	@Override
 	public List<Order> readAll() {
@@ -80,6 +84,10 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("order created");
 		return order;
 	}
+	/*
+	 * update method which updates order entry and also can add, remove, or change
+	 * the quantity of orderline entries
+	 */
 
 	@Override
 	public Order update() {
@@ -151,6 +159,9 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("update details recorded");
 		return order;
 	}
+	/*
+	 * deletes an order using the orderID
+	 */
 
 	@Override
 	public void delete() {
