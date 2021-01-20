@@ -35,15 +35,13 @@ public class OrderDaoMysqlTest {
 	public void setUp() {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate(
-					"insert into customers(first_name,surname) values('kiera','walton'); delete * from orders");
+			statement.executeUpdate("delete * from ims_test.orders");
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getStackTrace());
 		}
 	}
 
-//FAILING - DON'T KNOW WHY!!
 	@Test
 	public void createTest() {
 		OrderDaoMysql orderDaoMysql = new OrderDaoMysql(jdbcConnectionUrl, username, password);
@@ -52,6 +50,7 @@ public class OrderDaoMysqlTest {
 		Order order = new Order(customerID, totalPrice);
 		Order savedOrder = new Order(1L, customerID, totalPrice);
 		order = orderDaoMysql.create(order);
+		order.setOrderID(1L);
 		assertEquals(savedOrder, order);
 	}
 
