@@ -36,7 +36,8 @@ public class CustomerDaoMysqlTest {
 		// cleans out database every time
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("delete * from customers;");
+			statement.executeUpdate(
+					"delete * from customers; insert into customers(first_name,surname) values('kiera','walton');");
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getStackTrace());
@@ -49,7 +50,7 @@ public class CustomerDaoMysqlTest {
 		String fn = "jim";
 		String ln = "bob";
 		Customer customer = new Customer(fn, ln);
-		Customer savedCustomer = new Customer(1L, fn, ln);
+		Customer savedCustomer = new Customer(2L, fn, ln);
 		customer = customerDaoMysql.create(customer);
 		assertEquals(savedCustomer, customer);
 	}

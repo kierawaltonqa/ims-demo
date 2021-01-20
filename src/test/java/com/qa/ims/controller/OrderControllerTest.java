@@ -74,12 +74,17 @@ public class OrderControllerTest {
 	}
 
 	@Test
-	public void createOrderlineTest() {
+	public void createOrderlineCaseATest() {
 
 	}
 
 	@Test
-	public void caseBInUpdateMethodTest() {
+	public void updateOrderlineCaseBTest() {
+
+	}
+
+	@Test
+	public void removeOrderlineCaseBTest() {
 
 	}
 
