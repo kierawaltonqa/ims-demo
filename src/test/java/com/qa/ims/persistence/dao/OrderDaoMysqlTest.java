@@ -34,10 +34,9 @@ public class OrderDaoMysqlTest {
 	@Before
 	public void setUp() {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();
-				Statement statement2 = connection.createStatement();) {
-			statement2.executeUpdate("insert into customers(first_name,surname) values('kiera','walton');");
-			statement.executeUpdate("delete from orders;");
+				Statement statement = connection.createStatement();) {
+			statement.executeUpdate(
+					"insert into customers(first_name,surname) values('kiera','walton'); delete * from orders");
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getStackTrace());

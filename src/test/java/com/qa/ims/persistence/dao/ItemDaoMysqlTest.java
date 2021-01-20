@@ -21,7 +21,7 @@ public class ItemDaoMysqlTest {
 
 	public static final Logger LOGGER = Logger.getLogger(ItemDaoMysql.class);
 
-	private static String jdbcConnectionUrl = "jdbc:mysql://localhost:3306/ims_demo";
+	private static String jdbcConnectionUrl = "jdbc:mysql://localhost:3306/ims_test";
 	private static String username = "root";
 	private static String password = "root";
 

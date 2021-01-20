@@ -32,7 +32,7 @@ public class OrderControllerTest {
 
 	@Test
 	public void readAllOrderTest() {
-		OrderController orderController = new OrderController(orderServices);
+		OrderController orderController = new OrderController(orderServices, orderlineServices);
 		List<Order> orders = new ArrayList<>();
 		orders.add(new Order(1L, 20.0)); // customerID and price (orderID auto)
 		orders.add(new Order(3L, 50.0));
@@ -43,7 +43,7 @@ public class OrderControllerTest {
 
 	@Test
 	public void readAllOrderlineTest() {
-		OrderController orderController = new OrderController(orderServices);
+		OrderController orderController = new OrderController(orderServices, orderlineServices);
 		List<Orderline> ols = new ArrayList<>();
 		ols.add(new Orderline(1L, 1L, 3));
 		ols.add(new Orderline(2L, 1L, 1));
