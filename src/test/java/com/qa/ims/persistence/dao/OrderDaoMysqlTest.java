@@ -50,7 +50,7 @@ public class OrderDaoMysqlTest {
 		Order order = new Order(customerID, totalPrice);
 		Order savedOrder = new Order(1L, customerID, totalPrice);
 		order = orderDaoMysql.create(order);
-		// order.setOrderID(1L);
+		order.setOrderID(1L);
 		assertEquals(savedOrder, order);
 	}
 

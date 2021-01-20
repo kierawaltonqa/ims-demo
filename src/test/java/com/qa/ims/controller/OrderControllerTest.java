@@ -14,7 +14,6 @@ import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.qa.ims.persistence.domain.Order;
-import com.qa.ims.persistence.domain.Orderline;
 import com.qa.ims.services.OrderServices;
 import com.qa.ims.services.OrderlineServices;
 
@@ -41,17 +40,17 @@ public class OrderControllerTest {
 		assertEquals(orders, orderServices.readAll());
 	}
 
-	@Test
-	public void readAllOrderlineTest() {
-		OrderController orderController = new OrderController(orderServices, orderlineServices);
-		List<Orderline> ols = new ArrayList<>();
-		ols.add(new Orderline(1L, 1L, 3));
-		ols.add(new Orderline(2L, 1L, 1));
-		ols.add(new Orderline(3L, 2L, 2));
-		ols.add(new Orderline(4L, 2L, 1));
-		Mockito.when(orderlineServices.readAll()).thenReturn(ols);
-		assertEquals(ols, orderlineServices.readAll());
-	}
+//	@Test
+//	public void readAllOrderlineTest() {
+//		OrderController orderController = new OrderController(orderServices, orderlineServices);
+//		List<Orderline> ols = new ArrayList<>();
+//		ols.add(new Orderline(1L, 1L, 3));
+//		ols.add(new Orderline(2L, 1L, 1));
+//		ols.add(new Orderline(3L, 2L, 2));
+//		ols.add(new Orderline(4L, 2L, 1));
+//		Mockito.when(orderlineServices.readAll()).thenReturn(ols);
+//		assertEquals(ols, orderlineServices.readAll());
+//	}
 
 	@Test
 	public void deleteTest() {
@@ -61,32 +60,17 @@ public class OrderControllerTest {
 		Mockito.verify(orderServices, Mockito.times(1)).delete(1L);
 	}
 
-	@Test
-	public void createOrderTest() {
-		String customerID = "1";
-		Double totalPrice = 50.0;
-		Mockito.doReturn(customerID).when(orderController).getInput();
-		Mockito.doReturn(totalPrice).when(orderController).getDoubleInput();
-		Order order = new Order(1L, 50.0);
-		Order savedOrder = new Order(1L, 1L, 50.0);
-		Mockito.when(orderServices.create(order)).thenReturn(savedOrder);
-		assertEquals(savedOrder, orderController.create());
-	}
-
-	@Test
-	public void createOrderlineCaseATest() {
-
-	}
-
-	@Test
-	public void updateOrderlineCaseBTest() {
-
-	}
-
-	@Test
-	public void removeOrderlineCaseBTest() {
-
-	}
+//	@Test
+//	public void createOrderTest() {
+//		String customerID = "1";
+//		Double totalPrice = 50.0;
+//		Mockito.doReturn(customerID).when(orderController).getInput();
+//		Mockito.doReturn(totalPrice).when(orderController).getDoubleInput();
+//		Order order = new Order(1L, 50.0);
+//		Order savedOrder = new Order(1L, 1L, 50.0);
+//		Mockito.when(orderServices.create(order)).thenReturn(savedOrder);
+//		assertEquals(savedOrder, orderController.create());
+//	}
 
 	@Test
 	public void updateTest() {
