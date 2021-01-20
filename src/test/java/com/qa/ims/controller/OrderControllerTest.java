@@ -14,6 +14,7 @@ import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.qa.ims.persistence.domain.Order;
+import com.qa.ims.persistence.domain.Orderline;
 import com.qa.ims.services.OrderServices;
 import com.qa.ims.services.OrderlineServices;
 
@@ -38,6 +39,18 @@ public class OrderControllerTest {
 		orders.add(new Order(2L, 20.0));
 		Mockito.when(orderServices.readAll()).thenReturn(orders);
 		assertEquals(orders, orderServices.readAll());
+	}
+
+	@Test
+	public void readAllOrderlineTest() {
+		OrderController orderController = new OrderController(orderServices);
+		List<Orderline> ols = new ArrayList<>();
+		ols.add(new Orderline(1L, 1L, 3));
+		ols.add(new Orderline(2L, 1L, 1));
+		ols.add(new Orderline(3L, 2L, 2));
+		ols.add(new Orderline(4L, 2L, 1));
+		Mockito.when(orderlineServices.readAll()).thenReturn(ols);
+		assertEquals(ols, orderlineServices.readAll());
 	}
 
 	@Test
