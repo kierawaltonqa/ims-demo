@@ -34,6 +34,10 @@ public class OrderController implements CrudController<Order> {
 	Double getDoubleInput() {
 		return Utils.getDoubleInput();
 	}
+	/*
+	 * read method shows all orders in the system and offers the option to view all
+	 * the orderline entries in the system too
+	 */
 
 	@Override
 	public List<Order> readAll() {
@@ -62,7 +66,7 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("enter the customerID for the order you wish to create");
 		Long customerID = Long.valueOf(getInput());
 		LOGGER.info("enter the total price of your order");
-		Double totalPrice = getDoubleInput();
+		Double totalPrice = Double.valueOf(getInput());
 		Order order = orderService.create(new Order(customerID, totalPrice));
 		LOGGER.info("order created, with orderID: " + order.getOrderID());
 
@@ -75,10 +79,15 @@ public class OrderController implements CrudController<Order> {
 			Orderline orderline = orderlineService.create(new Orderline(order.getOrderID(), itemID, quantity));
 			LOGGER.info("enter yes to add more items, enter no to finish order");
 			answer = getInput();
+
 		}
 		LOGGER.info("order created");
 		return order;
 	}
+	/*
+	 * update method which updates order entry and also can add, remove, or change
+	 * the quantity of orderline entries
+	 */
 
 	@Override
 	public Order update() {
@@ -138,7 +147,6 @@ public class OrderController implements CrudController<Order> {
 				LOGGER.info("enter the new quantity of this item");
 				Integer quantity2 = Integer.parseInt(getInput());
 				Orderline ol = orderlineService.update(new Orderline(orderID, itemID2, quantity2, orderlineID2));
-				LOGGER.info("quantity changed");
 				break;
 
 			default:
@@ -151,6 +159,9 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("update details recorded");
 		return order;
 	}
+	/*
+	 * deletes an order using the orderID
+	 */
 
 	@Override
 	public void delete() {

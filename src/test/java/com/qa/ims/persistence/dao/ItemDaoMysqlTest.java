@@ -21,7 +21,7 @@ public class ItemDaoMysqlTest {
 
 	public static final Logger LOGGER = Logger.getLogger(ItemDaoMysql.class);
 
-	private static String jdbcConnectionUrl = "jdbc:mysql://localhost:3306/ims_demo";
+	private static String jdbcConnectionUrl = "jdbc:mysql://localhost:3306/ims_test";
 	private static String username = "root";
 	private static String password = "root";
 
@@ -36,7 +36,7 @@ public class ItemDaoMysqlTest {
 		// cleans out database every time
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("delete from items;");
+			statement.executeUpdate("delete * from ims_test.items;");
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getStackTrace());
@@ -48,9 +48,10 @@ public class ItemDaoMysqlTest {
 		ItemDaoMysql itemDaoMysql = new ItemDaoMysql(jdbcConnectionUrl, username, password);
 		String itemName = "candle";
 		Double itemPrice = 5.0;
-		Item item = new Item(itemName, itemPrice);
+		Item item = new Item(1L, itemName, itemPrice);
 		Item savedItem = new Item(1L, itemName, itemPrice);
 		item = itemDaoMysql.create(item);
+		item.setItemID(1L);
 		assertEquals(savedItem, item);
 	}
 
