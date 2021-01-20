@@ -62,7 +62,7 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("enter the customerID for the order you wish to create");
 		Long customerID = Long.valueOf(getInput());
 		LOGGER.info("enter the total price of your order");
-		Double totalPrice = getDoubleInput();
+		Double totalPrice = Double.valueOf(getInput());
 		Order order = orderService.create(new Order(customerID, totalPrice));
 		LOGGER.info("order created, with orderID: " + order.getOrderID());
 
@@ -75,6 +75,7 @@ public class OrderController implements CrudController<Order> {
 			Orderline orderline = orderlineService.create(new Orderline(order.getOrderID(), itemID, quantity));
 			LOGGER.info("enter yes to add more items, enter no to finish order");
 			answer = getInput();
+
 		}
 		LOGGER.info("order created");
 		return order;
@@ -138,7 +139,6 @@ public class OrderController implements CrudController<Order> {
 				LOGGER.info("enter the new quantity of this item");
 				Integer quantity2 = Integer.parseInt(getInput());
 				Orderline ol = orderlineService.update(new Orderline(orderID, itemID2, quantity2, orderlineID2));
-				LOGGER.info("quantity changed");
 				break;
 
 			default:

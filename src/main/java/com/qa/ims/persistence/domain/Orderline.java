@@ -1,7 +1,9 @@
 package com.qa.ims.persistence.domain;
 
 public class Orderline {
+	// from order
 	private Long orderID;
+
 	private Long itemID;
 	private Integer quantity;
 	private Long orderlineID;

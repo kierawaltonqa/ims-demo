@@ -27,10 +27,10 @@ public class OrderControllerTest {
 	@Spy
 	@InjectMocks
 	private OrderController orderController;
-	private OrderlineController orderlineController;
+	// private OrderlineController orderlineController;
 
 	@Test
-	public void readAllTest() {
+	public void readAllOrderTest() {
 		OrderController orderController = new OrderController(orderServices);
 		List<Order> orders = new ArrayList<>();
 		orders.add(new Order(1L, 20.0)); // customerID and price (orderID auto)
@@ -49,7 +49,7 @@ public class OrderControllerTest {
 	}
 
 	@Test
-	public void createTest() {
+	public void createOrderTest() {
 		String customerID = "1";
 		Double totalPrice = 50.0;
 		Mockito.doReturn(customerID).when(orderController).getInput();
@@ -58,6 +58,16 @@ public class OrderControllerTest {
 		Order savedOrder = new Order(1L, 1L, 50.0);
 		Mockito.when(orderServices.create(order)).thenReturn(savedOrder);
 		assertEquals(savedOrder, orderController.create());
+	}
+
+	@Test
+	public void createOrderlineTest() {
+
+	}
+
+	@Test
+	public void caseBInUpdateMethodTest() {
+
 	}
 
 	@Test
