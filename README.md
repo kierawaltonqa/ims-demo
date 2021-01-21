@@ -1,4 +1,4 @@
-Coverage: 62%
+Coverage: 65%
 # Inventory Management System
 
 This project is an application, developed and implemented through java, which allows users to create, read, update and delete from tables in an SQL database. The database has 4 tables - customers, items, orders and orderline (an intermediary table to manage the many-to-many relationships within Java) - and users can interact with these tables via a command line. The java application uses a JDBC connection to create statements used for executing SQL commands, where the JDBC API is implemented through a JDBC driver.
