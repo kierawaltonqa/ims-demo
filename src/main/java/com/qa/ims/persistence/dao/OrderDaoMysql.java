@@ -60,7 +60,7 @@ public class OrderDaoMysql implements Dao<Order> {
 	public Order readLatest() {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("select * from orders ORDER BY orderID desc limit 1;");) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders ORDER BY orderID DESC LIMIT 1;");) {
 			resultSet.next();
 			return orderFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -75,8 +75,8 @@ public class OrderDaoMysql implements Dao<Order> {
 	public Order create(Order order) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement1 = connection.createStatement();) {
-			statement1.executeUpdate("INSERT INTO orders(customerID, totalPrice) VALUES('" + order.getCustomerID()
-					+ "', '" + order.getTotalPrice() + "')");
+			statement1.executeUpdate("INSERT INTO orders(customerID, totalPrice) VALUES(" + order.getCustomerID()
+					+ ", '" + order.getTotalPrice() + "')");
 			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
@@ -104,8 +104,8 @@ public class OrderDaoMysql implements Dao<Order> {
 	public Order update(Order order) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("update orders set customerID = " + order.getCustomerID() + ", totalPrice = "
-					+ order.getTotalPrice() + " where orderID =" + order.getOrderID());
+			statement.executeUpdate("update orders set customerID = " + order.getCustomerID() + ", totalPrice = '"
+					+ order.getTotalPrice() + "' where orderID =" + order.getOrderID());
 			return readOrder(order.getOrderID());
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());

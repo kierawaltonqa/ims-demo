@@ -35,24 +35,27 @@ public class OrderDaoMysqlTest {
 	public void setUp() {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("delete * from ims_test.orders");
+			statement.executeUpdate("INSERT INTO customers(first_name,surname) VALUES('kiera','walton');");
+			// "DELETE FROM ims_test.orders; DELETE FROM ims_test.customers; DELETE FROM
+			// ims_test.orderline; ALTER TABLE orders auto_increment=1; ALTER TABLE
+			// orderline auto_increment=1; INSERT INTO customers(first_name,surname)
+			// VALUES('kiera','walton');");
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getStackTrace());
 		}
 	}
 
-//	@Test
-//	public void createTest() {
-//		OrderDaoMysql orderDaoMysql = new OrderDaoMysql(jdbcConnectionUrl, username, password);
-//		Long customerID = 1L;
-//		Double totalPrice = 50.0;
-//		Order order = new Order(customerID, totalPrice);
-//		Order savedOrder = new Order(1L, customerID, totalPrice);
-//		order = orderDaoMysql.create(order);
-//		order.setOrderID(1L);
-//		assertEquals(savedOrder, order);
-//	}
+	@Test
+	public void createTest() {
+		OrderDaoMysql orderDaoMysql = new OrderDaoMysql(jdbcConnectionUrl, username, password);
+		Long customerID = 1L;
+		Double totalPrice = 50.0;
+		Order order = new Order(customerID, totalPrice);
+		Order savedOrder = new Order(1L, customerID, totalPrice);
+		order = orderDaoMysql.create(order);
+		assertEquals(savedOrder, order);
+	}
 
 	@Test
 	public void readAllTest() {

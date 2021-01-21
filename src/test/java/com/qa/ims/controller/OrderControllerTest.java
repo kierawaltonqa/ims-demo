@@ -27,7 +27,6 @@ public class OrderControllerTest {
 	@Spy
 	@InjectMocks
 	private OrderController orderController;
-	// private OrderlineController orderlineController;
 
 	@Test
 	public void readAllOrderTest() {
@@ -43,6 +42,7 @@ public class OrderControllerTest {
 //	@Test
 //	public void readAllOrderlineTest() {
 //		OrderController orderController = new OrderController(orderServices, orderlineServices);
+//		// List<Order> orders = new ArrayList<>();
 //		List<Orderline> ols = new ArrayList<>();
 //		ols.add(new Orderline(1L, 1L, 3));
 //		ols.add(new Orderline(2L, 1L, 1));
@@ -61,16 +61,24 @@ public class OrderControllerTest {
 	}
 
 //	@Test
-//	public void createOrderTest() {
-//		String customerID = "1";
-//		Double totalPrice = 50.0;
-//		Mockito.doReturn(customerID).when(orderController).getInput();
-//		Mockito.doReturn(totalPrice).when(orderController).getDoubleInput();
-//		Order order = new Order(1L, 50.0);
-//		Order savedOrder = new Order(1L, 1L, 50.0);
-//		Mockito.when(orderServices.create(order)).thenReturn(savedOrder);
-//		assertEquals(savedOrder, orderController.create());
+//	public void deleteOrderlineTest() {
+//		String orderlineID = "1";
+//		Mockito.doReturn(orderlineID).when(orderController).getInput();
+//		orderController.update();
+//		Mockito.verify(orderlineServices, Mockito.times(1)).delete(1L);
 //	}
+
+	@Test
+	public void createOrderTest() {
+		String customerID = "1";
+		Double totalPrice = 50.0;
+		Mockito.doReturn(customerID).when(orderController).getInput();
+		Mockito.doReturn(totalPrice).when(orderController).getDoubleInput();
+		Order order = new Order(1L, 50.0);
+		Order savedOrder = new Order(1L, 1L, 50.0);
+		Mockito.when(orderServices.create(order)).thenReturn(savedOrder);
+		assertEquals(savedOrder, orderController.create());
+	}
 
 	@Test
 	public void updateTest() {
