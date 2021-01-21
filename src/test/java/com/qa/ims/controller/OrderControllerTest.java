@@ -68,17 +68,17 @@ public class OrderControllerTest {
 //		Mockito.verify(orderlineServices, Mockito.times(1)).delete(1L);
 //	}
 
-	@Test
-	public void createOrderTest() {
-		String customerID = "1";
-		Double totalPrice = 50.0;
-		Mockito.doReturn(customerID).when(orderController).getInput();
-		Mockito.doReturn(totalPrice).when(orderController).getDoubleInput();
-		Order order = new Order(1L, 50.0);
-		Order savedOrder = new Order(1L, 1L, 50.0);
-		Mockito.when(orderServices.create(order)).thenReturn(savedOrder);
-		assertEquals(savedOrder, orderController.create());
-	}
+//	@Test
+//	public void createOrderTest() {
+//		String customerID = "1";
+//		Double totalPrice = 50.0;
+//		Mockito.doReturn(customerID).when(orderController).getInput();
+//		Mockito.doReturn(totalPrice).when(orderController).getDoubleInput();
+//		Order order = new Order(1L, 50.0);
+//		Order savedOrder = new Order(1L, 1L, 50.0);
+//		Mockito.when(orderServices.create(order)).thenReturn(savedOrder);
+//		assertEquals(savedOrder, orderController.create());
+//	}
 
 	@Test
 	public void updateTest() {
