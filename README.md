@@ -34,7 +34,7 @@ Unit tests are used to test this application. Unit testing is a method by which 
 
 ## Deployment
 
-Deployment of this project has been managed through the use of a CI pipeline. Source code is written on Java, pushed to a VCS (GitHub) and tracked using a Jira Kanban Board. Maven is used as a build tool for this process, and JUnit is used for automated testing.
+Deployment of this project has been managed through the use of a CI pipeline. Source code is written on Java, pushed to a VCS (GitHub) and tracked using a Jira Kanban Board. Maven is used as a build tool for this process, and JUnit is used for automated testing. Mockito is also used to mock interfaces and add a dummy functionality during testing.
 
 ## Built With
 
@@ -44,7 +44,7 @@ Deployment of this project has been managed through the use of a CI pipeline. So
 * [GCP](https://cloud.google.com/) - Database Host
 * [JUnit](https://junit.org/junit5/) - Testing
 * [Mockito](https://site.mockito.org/) - Testing
-* [Jira](https://jira.atlassian.com/) - Project Management
+* [Jira](https://team-1607440641058.atlassian.net/plugins/servlet/project-config/IMS/permissions) - Project Management (this is a link to my Jira kanban board for this project)
 
 ## Versioning
 
@@ -67,4 +67,3 @@ This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md
 * **Nicholas Johnson** - *software trainer*
 * **Aswene Sivaraj** - *Java trainer* 
 * **Vinesh Ghela** - *Java trainer*
-
