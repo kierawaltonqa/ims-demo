@@ -36,8 +36,11 @@ public class OrderlineDaoMysqlTest {
 		// cleans out database every time
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate(
-					"delete from ims_test.orders; delete from ims_test.orderline; insert into orders(customerID,totalPrice) values(1,'10.0');");
+			statement.executeUpdate("INSERT INTO items(itemName,itemPrice) VALUES('candle','5.0');");
+			statement.executeUpdate("INSERT INTO customers(first_name,surname) VALUES('kiera','walton');");
+			statement.executeUpdate("INSERT INTO orders(customerID,totalPrice) VALUES(1,'10.0');");
+			// "delete from ims_test.orders; delete from ims_test.orderline; insert into
+			// orders(customerID,totalPrice) values(1,'10.0');");
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getStackTrace());
@@ -48,7 +51,7 @@ public class OrderlineDaoMysqlTest {
 	public void createTest() {
 		OrderlineDaoMysql orderlineDaoMysql = new OrderlineDaoMysql(jdbcConnectionUrl, username, password);
 		Long orderID = 1L;
-		Long itemID = 2L;
+		Long itemID = 1L;
 		Integer quantity = 3;
 		Orderline ol = new Orderline(orderID, itemID, quantity);
 		Orderline savedOl = new Orderline(orderID, itemID, quantity, 1L);
