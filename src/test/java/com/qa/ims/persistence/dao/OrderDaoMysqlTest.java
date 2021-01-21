@@ -78,6 +78,7 @@ public class OrderDaoMysqlTest {
 		assertEquals(savedOrder, order);
 	}
 
+	@Test
 	public void updateTest() {
 		OrderDaoMysql orderDaoMysql = new OrderDaoMysql(jdbcConnectionUrl, username, password);
 		Long customerID = 1L;
@@ -85,7 +86,7 @@ public class OrderDaoMysqlTest {
 		Order order = new Order(customerID, totalPrice);
 		Order savedOrder = new Order(1L, customerID, totalPrice);
 		orderDaoMysql.update(order);
-		// order.setOrderID(1L);
+		order.setOrderID(1L);
 		assertEquals(savedOrder, order);
 	}
 
