@@ -38,44 +38,44 @@ public class Ims {
 
 		init(username, password);
 
-		boolean stop = false;
-		do {
+		// CAN'T GET THIS DO WHILE LOOP WORKING
+		// boolean stop = false;
+		// do {
 
-			LOGGER.info("Which entity would you like to use?");
-			Domain.printDomains();
+		LOGGER.info("Which entity would you like to use?");
+		Domain.printDomains();
 
-			Domain domain = Domain.getDomain();
-			LOGGER.info("What would you like to do with " + domain.name().toLowerCase() + ":");
+		Domain domain = Domain.getDomain();
+		LOGGER.info("What would you like to do with " + domain.name().toLowerCase() + ":");
 
-			Action.printActions();
-			Action action = Action.getAction();
+		Action.printActions();
+		Action action = Action.getAction();
 
-			switch (domain) {
-			case CUSTOMER:
-				CustomerController customerController = new CustomerController(
-						new CustomerServices(new CustomerDaoMysql(username, password)));
-				doAction(customerController, action);
-				break;
-			case ITEM:
-				ItemController itemController = new ItemController(
-						new ItemServices(new ItemDaoMysql(username, password)));
-				doAction(itemController, action);
-				break;
-			case ORDER:
-				OrderController orderController = new OrderController(
-						new OrderServices(new OrderDaoMysql(username, password)),
-						new OrderlineServices(new OrderlineDaoMysql(username, password)));
-				doAction(orderController, action);
-				break;
-			case STOP:
-				stop = true;
-				break;
-			default:
-				break;
-			}
+		switch (domain) {
+		case CUSTOMER:
+			CustomerController customerController = new CustomerController(
+					new CustomerServices(new CustomerDaoMysql(username, password)));
+			doAction(customerController, action);
+			break;
+		case ITEM:
+			ItemController itemController = new ItemController(new ItemServices(new ItemDaoMysql(username, password)));
+			doAction(itemController, action);
+			break;
+		case ORDER:
+			OrderController orderController = new OrderController(
+					new OrderServices(new OrderDaoMysql(username, password)),
+					new OrderlineServices(new OrderlineDaoMysql(username, password)));
+			doAction(orderController, action);
+			break;
+		case STOP:
+			// stop = true;
+			break;
+		default:
+			break;
+		}
 
-		} while (!stop);
-		LOGGER.info("bye!");
+//		} while (!stop);
+//		LOGGER.info("bye!");
 	}
 
 	public void doAction(CrudController<?> crudController, Action action) {

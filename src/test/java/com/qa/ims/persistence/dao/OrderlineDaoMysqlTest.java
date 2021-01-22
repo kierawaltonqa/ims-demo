@@ -39,8 +39,6 @@ public class OrderlineDaoMysqlTest {
 			statement.executeUpdate("INSERT INTO items(itemName,itemPrice) VALUES('candle','5.0');");
 			statement.executeUpdate("INSERT INTO customers(first_name,surname) VALUES('kiera','walton');");
 			statement.executeUpdate("INSERT INTO orders(customerID,totalPrice) VALUES(1,'10.0');");
-			// "delete from ims_test.orders; delete from ims_test.orderline; insert into
-			// orders(customerID,totalPrice) values(1,'10.0');");
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getStackTrace());
