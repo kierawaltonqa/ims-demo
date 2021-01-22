@@ -38,37 +38,44 @@ public class Ims {
 
 		init(username, password);
 
-		LOGGER.info("Which entity would you like to use?");
-		Domain.printDomains();
+		boolean stop = false;
+		do {
 
-		Domain domain = Domain.getDomain();
-		LOGGER.info("What would you like to do with " + domain.name().toLowerCase() + ":");
+			LOGGER.info("Which entity would you like to use?");
+			Domain.printDomains();
 
-		Action.printActions();
-		Action action = Action.getAction();
+			Domain domain = Domain.getDomain();
+			LOGGER.info("What would you like to do with " + domain.name().toLowerCase() + ":");
 
-		switch (domain) {
-		case CUSTOMER:
-			CustomerController customerController = new CustomerController(
-					new CustomerServices(new CustomerDaoMysql(username, password)));
-			doAction(customerController, action);
-			break;
-		case ITEM:
-			ItemController itemController = new ItemController(new ItemServices(new ItemDaoMysql(username, password)));
-			doAction(itemController, action);
-			break;
-		case ORDER:
-			OrderController orderController = new OrderController(
-					new OrderServices(new OrderDaoMysql(username, password)),
-					new OrderlineServices(new OrderlineDaoMysql(username, password)));
-			doAction(orderController, action);
-			break;
-		case STOP:
-			break;
-		default:
-			break;
-		}
+			Action.printActions();
+			Action action = Action.getAction();
 
+			switch (domain) {
+			case CUSTOMER:
+				CustomerController customerController = new CustomerController(
+						new CustomerServices(new CustomerDaoMysql(username, password)));
+				doAction(customerController, action);
+				break;
+			case ITEM:
+				ItemController itemController = new ItemController(
+						new ItemServices(new ItemDaoMysql(username, password)));
+				doAction(itemController, action);
+				break;
+			case ORDER:
+				OrderController orderController = new OrderController(
+						new OrderServices(new OrderDaoMysql(username, password)),
+						new OrderlineServices(new OrderlineDaoMysql(username, password)));
+				doAction(orderController, action);
+				break;
+			case STOP:
+				stop = true;
+				break;
+			default:
+				break;
+			}
+
+		} while (!stop);
+		LOGGER.info("bye!");
 	}
 
 	public void doAction(CrudController<?> crudController, Action action) {
